@@ -12,9 +12,10 @@ kutils are a bunch of general Kotlin utils, CJK utils, Math utils.
 
 ## Before uploading to Github
 
-Do the following:
+Squash the commits from your local develop branch before pushing them to github:
 
-    $ git checkout github-always-squash
+    $ git checkout github
     $ git merge --squash develop
     $ git commit
-    $ git push github master
+    $ git push github
+    $ git checkout develop
