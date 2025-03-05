@@ -23,10 +23,14 @@ fun dots(s: String): String {
     return result
 }
 
-fun initCap(s: String) =
-    when (s.isEmpty()) {
-        true -> s
-        false -> "${s[0].uppercase()}${s.substring(1).lowercase()}"
+fun initCap(s: String, forceRestLowercase: Boolean = true): String =
+    when (s.length) {
+        0 -> s
+        1 -> s[0].uppercase()
+        else -> when (forceRestLowercase) {
+            true -> "${s[0].uppercase()}${s.substring(1).lowercase()}"
+            false -> "${s[0].uppercase()}${s.substring(1)}"
+        }
     }
 
 private enum class Case { LOWER, UPPER, DELIM, OTHER }
