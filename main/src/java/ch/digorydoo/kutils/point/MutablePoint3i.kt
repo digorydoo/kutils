@@ -1,7 +1,7 @@
 package ch.digorydoo.kutils.point
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class MutablePoint3i(theX: Int, theY: Int, theZ: Int): Point3i() {
+class MutablePoint3i(theX: Int, theY: Int, theZ: Int): Point3i(theX, theY, theZ) {
     constructor(): this(0, 0, 0)
     constructor(pt: Point3i): this(pt.x, pt.y, pt.z)
 

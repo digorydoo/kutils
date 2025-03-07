@@ -10,7 +10,7 @@ open class Point4f(
     open val z: Float,
     open val w: Float,
 ) {
-    constructor(): this(0.0f, 0.0f, 0.0f, 0.0f)
+    // constructor() doesn't exist -- use Point4f.zero instead!
     constructor(pt: Point4f): this(pt.x, pt.y, pt.z, pt.w)
 
     open operator fun plus(other: Point4f) =
@@ -48,4 +48,8 @@ open class Point4f(
 
     final override fun toString() =
         "($x, $y, $z, $w)"
+
+    companion object {
+        val zero = Point4f(0.0f, 0.0f, 0.0f, 0.0f)
+    }
 }

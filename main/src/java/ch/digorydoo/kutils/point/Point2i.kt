@@ -1,11 +1,8 @@
 package ch.digorydoo.kutils.point
 
 @Suppress("unused")
-open class Point2i(
-    open val x: Int,
-    open val y: Int,
-) {
-    constructor(): this(0, 0)
+open class Point2i(open val x: Int, open val y: Int) {
+    // constructor() doesn't exist -- use Point2i.zero instead!
     constructor(pt: Point2i): this(pt.x, pt.y)
 
     open operator fun plus(other: Point2i) =
@@ -28,4 +25,8 @@ open class Point2i(
 
     final override fun toString() =
         "($x, $y)"
+
+    companion object {
+        val zero = Point2i(0, 0)
+    }
 }

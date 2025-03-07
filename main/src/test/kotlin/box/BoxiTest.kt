@@ -87,7 +87,7 @@ internal class BoxiTest {
 
     @Test
     fun shouldProperlyComputeDistance() {
-        assertEquals(0.0f, Boxi().distanceFrom(Point3f()))
+        assertEquals(0.0f, Boxi().distanceFrom(Point3f(0.0f, 0.0f, 0.0f)))
 
         assertEquals(0.0f, Boxi(10, 20, 30, 40, 50, 60).distanceFrom(Point3f(20.0f, 30.0f, 40.0f)))
         assertEquals(13.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Point3f(15, 15, 0)))

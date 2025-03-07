@@ -3,7 +3,7 @@ package ch.digorydoo.kutils.point
 import ch.digorydoo.kutils.matrix.Matrix4f
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4f() {
+class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4f(theX, theY, theZ, theW) {
     constructor(): this(0.0f, 0.0f, 0.0f, 0.0f)
     constructor(pt: Point4f): this(pt.x, pt.y, pt.z, pt.w)
 

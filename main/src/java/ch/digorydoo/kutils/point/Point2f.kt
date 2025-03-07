@@ -9,7 +9,7 @@ open class Point2f(
     open val x: Float,
     open val y: Float,
 ) {
-    constructor(): this(0.0f, 0.0f)
+    // constructor() doesn't exist -- use Point2f.zero instead!
     constructor(ix: Int, iy: Int): this(ix.toFloat(), iy.toFloat())
     constructor(pt: Point2f): this(pt.x, pt.y)
 
@@ -84,7 +84,7 @@ open class Point2f(
         "($x, $y)"
 
     companion object {
-        val point00 = Point2f(0, 0)
+        val zero = Point2f(0, 0)
         val point01 = Point2f(0, 1)
         val point10 = Point2f(1, 0)
         val point11 = Point2f(1, 1)

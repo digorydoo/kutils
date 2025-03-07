@@ -4,12 +4,8 @@ import ch.digorydoo.kutils.math.max
 import kotlin.math.abs
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-open class Point3i(
-    open val x: Int,
-    open val y: Int,
-    open val z: Int,
-) {
-    constructor(): this(0, 0, 0)
+open class Point3i(open val x: Int, open val y: Int, open val z: Int) {
+    // constructor() doesn't exist -- use Point3i.zero instead!
     constructor(pt: Point3i): this(pt.x, pt.y, pt.z)
 
     open operator fun plus(other: Point3i) =
@@ -38,4 +34,8 @@ open class Point3i(
 
     final override fun toString() =
         "($x, $y, $z)"
+
+    companion object {
+        val zero = Point3i(0, 0, 0)
+    }
 }

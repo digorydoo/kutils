@@ -10,7 +10,7 @@ open class Point3f(
     open val y: Float,
     open val z: Float,
 ) {
-    constructor(): this(0.0f, 0.0f, 0.0f)
+    // constructor() doesn't exist -- use Point3f.zero instead!
     constructor(ix: Int, iy: Int, iz: Int): this(ix.toFloat(), iy.toFloat(), iz.toFloat())
     constructor(pt: Point3f): this(pt.x, pt.y, pt.z)
 
@@ -98,4 +98,8 @@ open class Point3f(
 
     final override fun toString() =
         "($x, $y, $z)"
+
+    companion object {
+        val zero = Point3f(0.0f, 0.0f, 0.0f)
+    }
 }

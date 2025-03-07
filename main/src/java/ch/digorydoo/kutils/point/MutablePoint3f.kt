@@ -7,7 +7,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class MutablePoint3f(theX: Float, theY: Float, theZ: Float): Point3f() {
+class MutablePoint3f(theX: Float, theY: Float, theZ: Float): Point3f(theX, theY, theZ) {
     constructor(): this(0.0f, 0.0f, 0.0f)
     constructor(ix: Int, iy: Int, iz: Int): this(ix.toFloat(), iy.toFloat(), iz.toFloat())
     constructor(pt: Point3f): this(pt.x, pt.y, pt.z)

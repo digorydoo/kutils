@@ -1,7 +1,7 @@
 package ch.digorydoo.kutils.point
 
 @Suppress("unused")
-class MutablePoint2i(theX: Int, theY: Int): Point2i() {
+class MutablePoint2i(theX: Int, theY: Int): Point2i(theX, theY) {
     constructor(): this(0, 0)
     constructor(pt: Point2i): this(pt.x, pt.y)
 
