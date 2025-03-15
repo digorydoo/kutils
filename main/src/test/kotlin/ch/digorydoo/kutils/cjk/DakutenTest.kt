@@ -1,7 +1,5 @@
-package cjk
+package ch.digorydoo.kutils.cjk
 
-import ch.digorydoo.kutils.cjk.isDakuten
-import ch.digorydoo.kutils.cjk.toggleDakuten
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

@@ -1,7 +1,5 @@
-package matrix
+package ch.digorydoo.kutils.matrix
 
-import ch.digorydoo.kutils.matrix.Matrix4f
-import ch.digorydoo.kutils.matrix.MutableMatrix4f
 import ch.digorydoo.kutils.point.Point3f
 import ch.digorydoo.kutils.string.toPrecision
 import ch.digorydoo.kutils.utils.mapInplace

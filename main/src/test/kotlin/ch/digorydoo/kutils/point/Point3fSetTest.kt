@@ -1,7 +1,5 @@
-package point
+package ch.digorydoo.kutils.point
 
-import ch.digorydoo.kutils.point.Point3f
-import ch.digorydoo.kutils.point.Point3fSet
 import kotlin.test.*
 
 internal class Point3fSetTest {

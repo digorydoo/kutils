@@ -1,6 +1,5 @@
-package string
+package ch.digorydoo.kutils.string
 
-import ch.digorydoo.kutils.string.indexOfAnyExcept
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

@@ -13,14 +13,14 @@ object Log {
         ERROR(2),
     }
 
-    enum class TtyOutput { EVERYTHING_STDOUT, INFO_TO_STDOUT_OTHER_TO_STDERR }
+    enum class TtyOutput { OFF, EVERYTHING_STDOUT, INFO_TO_STDOUT_OTHER_TO_STDERR }
 
     var logFile: File? = null; private set
     private var fileLogLevel = Severity.WARNING
 
     // By default, we output everything to stdout, because IntelliJ adds its own colours to stderr, which interferes
     // with our colours.
-    private var ttyOutput = TtyOutput.EVERYTHING_STDOUT
+    var ttyOutput = TtyOutput.EVERYTHING_STDOUT
 
     private var ttyLogLevel = Severity.INFO
     private var ttyColours = true
@@ -64,6 +64,7 @@ object Log {
         if (severity.level < ttyLogLevel.level) return
 
         val stream = when (ttyOutput) {
+            TtyOutput.OFF -> return
             TtyOutput.EVERYTHING_STDOUT -> System.out
             TtyOutput.INFO_TO_STDOUT_OTHER_TO_STDERR -> if (severity == Severity.INFO) System.out else System.err
         }

@@ -1,6 +1,5 @@
-package json
+package ch.digorydoo.kutils.json
 
-import ch.digorydoo.kutils.json.jsonOrNull
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails

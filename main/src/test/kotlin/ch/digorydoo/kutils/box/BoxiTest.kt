@@ -1,6 +1,5 @@
-package box
+package ch.digorydoo.kutils.box
 
-import ch.digorydoo.kutils.box.Boxi
 import ch.digorydoo.kutils.point.Point3f
 import kotlin.test.*
 

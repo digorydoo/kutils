@@ -1,6 +1,5 @@
-package utils
+package ch.digorydoo.kutils.utils
 
-import ch.digorydoo.kutils.utils.IdHash
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

@@ -1,8 +1,5 @@
-package cjk
+package ch.digorydoo.kutils.cjk
 
-import ch.digorydoo.kutils.cjk.isSmallKana
-import ch.digorydoo.kutils.cjk.toNormalSizedKana
-import ch.digorydoo.kutils.cjk.toSmallKana
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
