@@ -143,7 +143,7 @@ class RomajiBuilder {
     }
 
     /**
-     * Converts the kana from a non-furigana part to romaji. This method is called multiple times
+     * Converts the kana from a non-furigana part to romaji. This function is called multiple times
      * for each part around obvious word boundaries such as を.
      */
     private fun betweenPartToRomaji(part: CharSequence, preKanji: String): String {

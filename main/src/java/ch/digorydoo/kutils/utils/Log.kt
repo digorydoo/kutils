@@ -13,8 +13,9 @@ object Log {
         ERROR(2),
     }
 
-    enum class TtyOutput { OFF, EVERYTHING_STDOUT, INFO_TO_STDOUT_OTHER_TO_STDERR }
+    enum class TtyOutput { EVERYTHING_STDOUT, INFO_TO_STDOUT_OTHER_TO_STDERR }
 
+    var enabled = true
     var logFile: File? = null; private set
     private var fileLogLevel = Severity.WARNING
 
@@ -56,6 +57,7 @@ object Log {
     fun error(msg: String) = log(Severity.ERROR, msg)
 
     private fun log(severity: Severity, msg: String) {
+        if (!enabled) return
         logToTty(severity, msg)
         logToFile(severity, msg)
     }
@@ -64,7 +66,6 @@ object Log {
         if (severity.level < ttyLogLevel.level) return
 
         val stream = when (ttyOutput) {
-            TtyOutput.OFF -> return
             TtyOutput.EVERYTHING_STDOUT -> System.out
             TtyOutput.INFO_TO_STDOUT_OTHER_TO_STDERR -> if (severity == Severity.INFO) System.out else System.err
         }

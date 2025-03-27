@@ -263,7 +263,7 @@ class Moment {
 
     /**
      * @Deprecated("Use formatRevDate instead", ReplaceWith("formatRevDateTime()"))
-     * (The Deprecated annotation does not work on a method inherited from Any.)
+     * (The Deprecated annotation does not work on a function inherited from Any.)
      * @return yyyy-MM-dd HH:mm:ss
      */
     override fun toString(): String {
