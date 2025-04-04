@@ -13,6 +13,8 @@ object Log {
         ERROR(2),
     }
 
+    class Tag(val name: String)
+
     enum class TtyOutput { EVERYTHING_STDOUT, INFO_TO_STDOUT_OTHER_TO_STDERR }
 
     var enabled = true
@@ -52,14 +54,15 @@ object Log {
         }
     }
 
-    fun info(msg: String) = log(Severity.INFO, msg)
-    fun warn(msg: String) = log(Severity.WARNING, msg)
-    fun error(msg: String) = log(Severity.ERROR, msg)
+    fun info(tag: Tag, msg: String) = log(tag, Severity.INFO, msg)
+    fun warn(tag: Tag, msg: String) = log(tag, Severity.WARNING, msg)
+    fun error(tag: Tag, msg: String) = log(tag, Severity.ERROR, msg)
 
-    private fun log(severity: Severity, msg: String) {
+    private fun log(tag: Tag, severity: Severity, msg: String) {
         if (!enabled) return
-        logToTty(severity, msg)
-        logToFile(severity, msg)
+        val msgWithTag = "${tag.name}: $msg"
+        logToTty(severity, msgWithTag)
+        logToFile(severity, msgWithTag)
     }
 
     private fun logToTty(severity: Severity, msg: String) {
