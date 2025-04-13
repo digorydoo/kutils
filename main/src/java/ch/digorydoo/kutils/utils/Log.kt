@@ -93,7 +93,7 @@ object Log {
         }
 
         stream.print("$prefix$msg")
-        if (colour != null) stream.print("\n${Unicode.ESCAPE}[0m")
+        if (colour != null) stream.print("${Unicode.ESCAPE}[0m")
         stream.println()
     }
 

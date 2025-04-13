@@ -130,6 +130,7 @@ class RomajiBuilder {
             .replace("jūnin'ika", "jū-nin ika")
             .replace("bainōkane", "bai no o-kane")
             .replace("'inai", " inai")
+            .replace("kyōhazu ibun", "kyō wa zuibun")
     }
 
     /**

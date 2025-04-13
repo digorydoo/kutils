@@ -37,13 +37,6 @@ class MutablePoint3f(theX: Float, theY: Float, theZ: Float): Point3f(theX, theY,
         return this
     }
 
-    fun set(theX: Double, theY: Double, theZ: Double): MutablePoint3f {
-        x = theX.toFloat()
-        y = theY.toFloat()
-        z = theZ.toFloat()
-        return this
-    }
-
     fun setXY(other: Point2f): MutablePoint3f {
         x = other.x
         y = other.y
