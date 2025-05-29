@@ -30,6 +30,9 @@ fun Char.isPunctuation() =
 fun Char.isBracket() =
     this in Unicode.BRACKETS
 
+fun Char.isDigitOfAnyForm() =
+    this in Unicode.WESTERN_DIGITS || this in Unicode.WIDE_DIGITS || this in Unicode.CHINESE_DIGITS
+
 fun Char.toHiragana() =
     when (this in Unicode.KATAKANA.range) {
         true -> (this.code - Unicode.KATAKANA.range.first.code + Unicode.HIRAGANA.range.first.code).toChar()
@@ -71,6 +74,9 @@ fun CharSequence.hasPunctuation() =
 
 fun CharSequence.hasBracket() =
     any { it.isBracket() }
+
+fun CharSequence.hasDigitOfAnyForm() =
+    any { it.isDigitOfAnyForm() }
 
 fun CharSequence.toHiragana() =
     fold("") { result, c ->

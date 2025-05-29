@@ -3,23 +3,23 @@ package ch.digorydoo.kutils.cjk
 class RomajiBuilder {
     fun build(textWithFurigana: CharSequence): String {
         var result = ""
-        var incompletePrimary = ""
+        var incompleteKanji = ""
         var incompleteKana = ""
         var addSpaceNext = false
 
         FuriganaIterator(textWithFurigana).forEachPart(
-            { primary, kana ->
+            { kanji, kana ->
                 // This is a furigana part. Do not emit it right away, because we want
                 // to examine it when the non-furigana part follows.
-                incompletePrimary += primary
+                incompleteKanji += kanji
                 incompleteKana += kana
             },
             { between ->
-                // This is a non-furigana part.
+                // This is a non-furigana part, which may be okurigana, punctuation, numbers, etc.
 
                 if (between.endsWith("っ") || between.endsWith("ッ")) {
                     // Don't emit the part yet, we must still see what follows.
-                    incompletePrimary = ""
+                    incompleteKanji = ""
                     incompleteKana += between
                 } else {
                     if (addSpaceNext) {
@@ -33,22 +33,26 @@ class RomajiBuilder {
                         // Merge the furigana part with the non-furigana part, to emit
                         // the tsu correctly.
                         part = incompleteKana + part
-                        incompletePrimary = ""
+                        incompleteKanji = ""
                         incompleteKana = ""
                     }
 
                     // Emit the furigana part.
-                    result += furiganaPartToRomaji(incompletePrimary, incompleteKana)
+                    result += furiganaPartToRomaji(incompleteKanji, incompleteKana)
 
                     // Emit the non-furigana part.
-                    result += splitAtObviousBoundaries(part).joinToString(" ") {
-                        // FIXME incompletePrimary should only be called on the first split part!
-                        betweenPartToRomaji(it, incompletePrimary)
-                    }
+                    result += splitAtObviousBoundaries(part)
+                        .mapIndexed { idx, part ->
+                            betweenPartToRomaji(
+                                part,
+                                if (idx == 0) incompleteKanji else ""
+                            )
+                        }
+                        .joinToString(" ")
 
                     // Prepare for the next round.
                     addSpaceNext = part.endsWith("を")
-                    incompletePrimary = ""
+                    incompleteKanji = ""
                     incompleteKana = ""
                 }
             }
@@ -56,7 +60,7 @@ class RomajiBuilder {
 
         if (incompleteKana.isNotEmpty()) {
             // The iteration ended in a furigana part. Emit it!
-            result += furiganaPartToRomaji(incompletePrimary, incompleteKana)
+            result += furiganaPartToRomaji(incompleteKanji, incompleteKana)
         }
 
         // Special cases that would require us to rewrite kanji already emitted.
@@ -131,6 +135,7 @@ class RomajiBuilder {
             .replace("bainōkane", "bai no o-kane")
             .replace("'inai", " inai")
             .replace("kyōhazu ibun", "kyō wa zuibun")
+            .replace("sonōkane", "sono o-kane")
     }
 
     /**
@@ -344,6 +349,8 @@ class RomajiBuilder {
             "うとうと",
             "うろうろ",
             "おかげ",
+            "おっしゃいました",
+            "おっしゃって",
             "か",
             "から",
             "かれら",
