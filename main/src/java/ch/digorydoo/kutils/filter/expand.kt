@@ -2,9 +2,9 @@
 
 package ch.digorydoo.kutils.filter
 
-import ch.digorydoo.kutils.math.sign
 import kotlin.math.abs
 import kotlin.math.pow
+import kotlin.math.sign
 
 /**
  * Pushes the waveform outwards towards the boundaries -1..+1.

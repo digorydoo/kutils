@@ -64,7 +64,7 @@ open class Matrix4f protected constructor() {
 
     // Callers should prefer MutablePoint4f::setMultiplied
     fun multiplyTo(src: Point4f, dst: MutablePoint4f) {
-        require(src !== dst) { "src and dst must not be the same instance" }
+        // src and dst may be the same instance
         multiply(dst, _buffer, src)
     }
 

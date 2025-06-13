@@ -4,6 +4,7 @@ package ch.digorydoo.kutils.math
 
 import kotlin.math.abs
 import kotlin.math.pow
+import kotlin.math.sign
 
 /**
  * Pow function that keeps the original signum.

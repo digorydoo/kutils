@@ -5,6 +5,7 @@ package ch.digorydoo.kutils.math
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.pow
+import kotlin.math.sign
 import kotlin.math.sin
 
 /**

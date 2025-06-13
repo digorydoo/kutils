@@ -4,8 +4,8 @@ package ch.digorydoo.kutils.waveforms
 
 import ch.digorydoo.kutils.math.clamp
 import ch.digorydoo.kutils.math.lerp
-import ch.digorydoo.kutils.math.sign
 import kotlin.math.floor
+import kotlin.math.sign
 import kotlin.math.sin
 
 /**
