@@ -3,6 +3,7 @@
 package ch.digorydoo.kutils.utils
 
 import ch.digorydoo.kutils.cjk.IntlString
+import java.nio.file.attribute.FileTime
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit
  *    - Period
  *    - ZoneOffset
  *    - OffsetDateTime
+ *    - FileTime
  */
 class Moment {
     enum class U(val value: Int) {
@@ -50,6 +52,10 @@ class Moment {
 
     constructor(d: Date) {
         date = d.clone() as Date // Dates are mutable, so clone it
+    }
+
+    constructor(fileTime: FileTime) {
+        date = Date(fileTime.toMillis())
     }
 
     private constructor(d: Date, noClone: Boolean) {

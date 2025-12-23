@@ -5,7 +5,7 @@ package ch.digorydoo.kutils.utils
  * string ids from numerical ones.
  */
 class IdHash {
-    class InvalidHashError: Exception("Invalid hash")
+    class InvalidHashException: Exception("Invalid hash")
 
     fun encode(value: ULong): String {
         var x = value xor XOR_VALUE
@@ -38,7 +38,7 @@ class IdHash {
     }
 
     fun decode(hash: String): ULong {
-        if (hash.length != 13) throw InvalidHashError()
+        if (hash.length != 13) throw InvalidHashException()
         val i0 = indexOf(hash[0])
         val i1 = indexOf(hash[1])
         val i2 = indexOf(hash[2])
@@ -78,15 +78,15 @@ class IdHash {
     private fun indexOf(c: Char): Int = when (c.code) {
         in CODE_1 .. CODE_6 -> c.code - CODE_1
         in CODE_A .. CODE_Z -> 6 + c.code - CODE_A
-        else -> throw InvalidHashError()
+        else -> throw InvalidHashException()
     }
 
     companion object {
         private const val XOR_VALUE: ULong = 0x34a8e5b294f6175cu
         private val CHARS = "123456abcdefghijklmnopqrstuvwxyz".also { require(it.length == 32) }
-        private val CODE_A = 'a'.code
-        private val CODE_Z = 'z'.code
-        private val CODE_1 = '1'.code
-        private val CODE_6 = '6'.code
+        private const val CODE_A = 'a'.code
+        private const val CODE_Z = 'z'.code
+        private const val CODE_1 = '1'.code
+        private const val CODE_6 = '6'.code
     }
 }

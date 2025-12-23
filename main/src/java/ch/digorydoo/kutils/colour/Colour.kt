@@ -93,20 +93,18 @@ open class Colour(
             )
 
         fun fromString(s: String) =
-            if (s.length == 4 && s[0] == '#') {
-                Colour(
+            when {
+                s.length == 4 && s[0] == '#' -> Colour(
                     hexNibbleToFloat(s[1]),
                     hexNibbleToFloat(s[2]),
                     hexNibbleToFloat(s[3])
                 )
-            } else if (s.length == 7 && s[0] == '#') {
-                Colour(
+                s.length == 7 && s[0] == '#' -> Colour(
                     hexByteToFloat(s.slice(1 .. 2)),
                     hexByteToFloat(s.slice(3 .. 4)),
                     hexByteToFloat(s.slice(5 .. 6)),
                 )
-            } else {
-                black
+                else -> black
             }
 
         private fun hexNibbleToFloat(c: Char) =

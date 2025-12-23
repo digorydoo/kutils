@@ -7,18 +7,28 @@ abstract class CmdLineArg(val name: String, val alias: String) {
 @Suppress("unused")
 class OptionParseResult(val extraArgs: List<String>)
 
-class InvalidDefsError(msg: String): Exception(msg)
+class InvalidDefsException(msg: String): Exception(msg)
 
-abstract class OptionsParserError(override val message: String): Exception(message)
+abstract class OptionsParserException(override val message: String): Exception(message)
 
-class UnknownOptionError(key: String): OptionsParserError("Unknown option: $key")
-class ValueNotAllowedError(value: String): OptionsParserError("A value is not allowed here: $value")
-class IllegalValueError(value: String): OptionsParserError("Illegal value: $value")
-class MissingValueError: OptionsParserError("A value is required")
-class ExtraArgumentNotAllowedError(arg: String): OptionsParserError("Argument not understood: $arg")
+class UnknownOptionException(key: String): OptionsParserException("Unknown option: $key")
+class ValueNotAllowedException(value: String): OptionsParserException("A value is not allowed here: $value")
+class IllegalValueException(value: String): OptionsParserException("Illegal value: $value")
+class MissingValueException: OptionsParserException("A value is required")
+class ExtraArgumentNotAllowedException(arg: String): OptionsParserException("Argument not understood: $arg")
 
-class ValueOutOfRangeError(value: Int, min: Int?, max: Int?):
-    OptionsParserError(
+class IntValueOutOfRangeException(value: Int, min: Int?, max: Int?):
+    OptionsParserException(
+        "Value $value out of range! Expected a value " + when {
+            min != null && max != null -> "between $min and $max"
+            min != null && max == null -> ">= $min"
+            min == null && max != null -> "<= $max"
+            else -> "<bad range>"
+        }
+    )
+
+class FloatValueOutOfRangeException(value: Float, min: Float?, max: Float?):
+    OptionsParserException(
         "Value $value out of range! Expected a value " + when {
             min != null && max != null -> "between $min and $max"
             min != null && max == null -> ">= $min"
@@ -41,7 +51,7 @@ class OptionsParser(private val defs: Iterable<CmdLineArg>) {
                     if (allowExtraArgs) {
                         return OptionParseResult(extraArgs = args.slice(i ..< args.size))
                     } else {
-                        throw ExtraArgumentNotAllowedError(argBeingChecked)
+                        throw ExtraArgumentNotAllowedException(argBeingChecked)
                     }
                 }
 
@@ -60,16 +70,16 @@ class OptionsParser(private val defs: Iterable<CmdLineArg>) {
                     value = argBeingChecked.substring(eqAt + 1)
                 }
 
-                val opt = findOption(key) ?: throw UnknownOptionError(key)
+                val opt = findOption(key) ?: throw UnknownOptionException(key)
                 opt.check(value)
             }
 
             return OptionParseResult(extraArgs = listOf())
-        } catch (e: OptionsParserError) {
+        } catch (e: OptionsParserException) {
             val prefix = when {
                 argBeingChecked.isEmpty() -> ""
-                e is UnknownOptionError -> "" // message mentions arg already
-                e is ExtraArgumentNotAllowedError -> ""  // message mentions arg already
+                e is UnknownOptionException -> "" // message mentions arg already
+                e is ExtraArgumentNotAllowedException -> ""  // message mentions arg already
                 else -> "Argument $argBeingChecked: "
             }
             throw ShellCommandError("$prefix${e.message}")
@@ -81,16 +91,16 @@ class OptionsParser(private val defs: Iterable<CmdLineArg>) {
 
         defs.forEach { def ->
             if (def.name.length < 3) {
-                throw InvalidDefsError("Name is too short: ${def.name}")
+                throw InvalidDefsException("Name is too short: ${def.name}")
             }
             if (def.alias.isNotEmpty() && def.alias.length > 1) {
-                throw InvalidDefsError("Alias is too long: ${def.alias}")
+                throw InvalidDefsException("Alias is too long: ${def.alias}")
             }
             if (namesAndAliases.contains(def.name)) {
-                throw InvalidDefsError("Name already defined: ${def.name}")
+                throw InvalidDefsException("Name already defined: ${def.name}")
             }
             if (namesAndAliases.contains(def.alias)) {
-                throw InvalidDefsError("Alias already defined: ${def.alias}")
+                throw InvalidDefsException("Alias already defined: ${def.alias}")
             }
             namesAndAliases.add(def.name)
             namesAndAliases.add(def.alias)

@@ -2,8 +2,11 @@ package ch.digorydoo.kutils.point
 
 @Suppress("unused")
 open class Point2i(open val x: Int, open val y: Int) {
-    // constructor() doesn't exist -- use Point2i.zero instead!
+    // constructor() with empty arguments intentionally not implemented -- use Point2i.zero instead!
     constructor(pt: Point2i): this(pt.x, pt.y)
+
+    operator fun component1() = x
+    operator fun component2() = y
 
     open operator fun plus(other: Point2i) =
         Point2i(x + other.x, y + other.y)

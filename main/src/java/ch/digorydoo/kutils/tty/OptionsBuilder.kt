@@ -4,26 +4,18 @@ package ch.digorydoo.kutils.tty
 class OptionsBuilder private constructor() {
     private val options = mutableListOf<CmdLineArg>()
 
-    fun addValueless(name: String, lambda: () -> Unit) {
-        addValueless(name, "", lambda)
-    }
-
     fun addValueless(name: String, alias: String, lambda: () -> Unit) {
         options.add(
             object: CmdLineArg(name, alias) {
                 override fun check(value: String) {
                     if (value.isNotEmpty()) {
-                        throw ValueNotAllowedError(value)
+                        throw ValueNotAllowedException(value)
                     } else {
                         lambda()
                     }
                 }
             }
         )
-    }
-
-    fun addBoolean(name: String, lambda: (value: Boolean) -> Unit) {
-        addBoolean(name, "", lambda)
     }
 
     fun addBoolean(name: String, alias: String, lambda: (value: Boolean) -> Unit) {
@@ -37,7 +29,7 @@ class OptionsBuilder private constructor() {
                             it == "yes" -> lambda(true)
                             it == "false" -> lambda(false)
                             it == "no" -> lambda(false)
-                            else -> throw IllegalValueError(value)
+                            else -> throw IllegalValueException(value)
                         }
                     }
                 }
@@ -45,25 +37,17 @@ class OptionsBuilder private constructor() {
         )
     }
 
-    fun addString(name: String, lambda: (value: String) -> Unit) {
-        addString(name, "", lambda)
-    }
-
     fun addString(name: String, alias: String, lambda: (value: String) -> Unit) {
         options.add(
             object: CmdLineArg(name, alias) {
                 override fun check(value: String) {
                     when {
-                        value.isEmpty() -> throw MissingValueError()
+                        value.isEmpty() -> throw MissingValueException()
                         else -> lambda(value)
                     }
                 }
             }
         )
-    }
-
-    fun addInt(name: String, minValue: Int?, maxValue: Int?, lambda: (value: Int) -> Unit) {
-        addInt(name, "", minValue, maxValue, lambda)
     }
 
     fun addInt(
@@ -77,7 +61,7 @@ class OptionsBuilder private constructor() {
             object: CmdLineArg(name, alias) {
                 override fun check(value: String) {
                     if (value.isEmpty()) {
-                        throw MissingValueError()
+                        throw MissingValueException()
                     }
 
                     val i: Int
@@ -85,17 +69,52 @@ class OptionsBuilder private constructor() {
                     try {
                         i = value.toInt()
                     } catch (e: NumberFormatException) {
-                        throw IllegalValueError(value)
+                        throw IllegalValueException(value)
                     }
 
                     val tooLow = minValue != null && i < minValue
                     val tooHigh = maxValue != null && i > maxValue
 
-                    return if (tooLow || tooHigh) {
-                        throw ValueOutOfRangeError(value = i, min = minValue, max = maxValue)
-                    } else {
-                        lambda(i)
+                    if (tooLow || tooHigh) {
+                        throw IntValueOutOfRangeException(value = i, min = minValue, max = maxValue)
                     }
+
+                    lambda(i)
+                }
+            }
+        )
+    }
+
+    fun addFloat(
+        name: String,
+        alias: String,
+        minValue: Float?,
+        maxValue: Float?,
+        lambda: (value: Float) -> Unit,
+    ) {
+        options.add(
+            object: CmdLineArg(name, alias) {
+                override fun check(value: String) {
+                    if (value.isEmpty()) {
+                        throw MissingValueException()
+                    }
+
+                    val f: Float
+
+                    try {
+                        f = value.toFloat()
+                    } catch (e: NumberFormatException) {
+                        throw IllegalValueException(value)
+                    }
+
+                    val tooLow = minValue != null && f < minValue
+                    val tooHigh = maxValue != null && f > maxValue
+
+                    if (tooLow || tooHigh) {
+                        throw FloatValueOutOfRangeException(value = f, min = minValue, max = maxValue)
+                    }
+
+                    lambda(f)
                 }
             }
         )

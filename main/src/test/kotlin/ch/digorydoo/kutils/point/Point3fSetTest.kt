@@ -6,7 +6,7 @@ internal class Point3fSetTest {
     @Test
     fun shouldCreateProperEmptySet() {
         val set = Point3fSet()
-        assertTrue(set.size == 0)
+        assertEquals(0, set.size)
         assertTrue(set.isEmpty())
         assertEquals(set.toString(), "{}")
     }

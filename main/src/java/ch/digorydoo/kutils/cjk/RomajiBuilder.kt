@@ -24,6 +24,7 @@ class RomajiBuilder {
                 } else {
                     if (addSpaceNext) {
                         result += " "
+                        @Suppress("AssignedValueIsNeverRead") // suppress incorrect warning
                         addSpaceNext = false
                     }
 
@@ -51,6 +52,7 @@ class RomajiBuilder {
                         .joinToString(" ")
 
                     // Prepare for the next round.
+                    @Suppress("AssignedValueIsNeverRead") // suppress incorrect warning
                     addSpaceNext = part.endsWith("を")
                     incompleteKanji = ""
                     incompleteKana = ""
@@ -58,8 +60,13 @@ class RomajiBuilder {
             }
         )
 
+        if (incompleteKana.endsWith("っ")) {
+            // We can't render a small tsu at the end of a phrase.
+            incompleteKana = incompleteKana.take(incompleteKana.length - 1)
+        }
+
         if (incompleteKana.isNotEmpty()) {
-            // The iteration ended in a furigana part. Emit it!
+            // The iteration ended in a furigana part.
             result += furiganaPartToRomaji(incompleteKanji, incompleteKana)
         }
 
@@ -136,6 +143,8 @@ class RomajiBuilder {
             .replace("'inai", " inai")
             .replace("kyōhazu ibun", "kyō wa zuibun")
             .replace("sonōkane", "sono o-kane")
+            .replace("kurōma", "kurouma")
+            .replace("shirōma", "shirouma")
     }
 
     /**
@@ -155,12 +164,11 @@ class RomajiBuilder {
     private fun betweenPartToRomaji(part: CharSequence, preKanji: String): String {
         specialCasesToRomaji(part)?.let { return it }
 
-        if (preKanji == "大" && part == "きな") {
-            return "ki na "
-        }
-
-        return splitAtKnownWords(part).joinToString(" ") {
-            specialCasesToRomaji(it) ?: kanaToRomaji(it)
+        return when {
+            preKanji == "大" && part == "きな" -> "ki na "
+            else -> splitAtKnownWords(part).joinToString(" ") {
+                specialCasesToRomaji(it) ?: kanaToRomaji(it)
+            }
         }
     }
 
@@ -183,6 +191,7 @@ class RomajiBuilder {
             "はきはき" -> " hakihaki "
             "へ" -> " e "
             "はい" -> " hai "
+            "のお" -> "no o"
             else -> null
         }
     }

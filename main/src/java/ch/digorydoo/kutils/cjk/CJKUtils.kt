@@ -18,6 +18,12 @@ fun Char.isHiragana() =
 fun Char.isKatakana() =
     this in Unicode.KATAKANA.range || this in Unicode.KATAKANA.phoneticsRange
 
+fun Char.isKana() =
+    isHiragana() || isKatakana()
+
+fun Char.isCJKOrKana() =
+    isCJK() || isKana()
+
 fun Char.isOneStrokeKanji() =
     this in Unicode.ONE_STROKE_KANJI
 
@@ -45,6 +51,7 @@ fun Char.toKatakana() =
         else -> this
     }
 
+// @returns false for hiragana and katakana!
 fun CharSequence.isCJK() =
     all { it.isCJK() }
 
@@ -54,12 +61,19 @@ fun CharSequence.isHiragana() =
 fun CharSequence.isKatakana() =
     all { it.isKatakana() }
 
+fun CharSequence.isKana() =
+    all { it.isKana() }
+
+fun CharSequence.isCJKOrKana() =
+    all { it.isCJKOrKana() }
+
 fun CharSequence.isPunctuation() =
     all { it.isPunctuation() }
 
 fun CharSequence.isBracket() =
     all { it.isBracket() }
 
+// @returns false for hiragana and katakana!
 fun CharSequence.hasCJK() =
     any { it.isCJK() }
 
@@ -68,6 +82,12 @@ fun CharSequence.hasHiragana() =
 
 fun CharSequence.hasKatakana() =
     any { it.isKatakana() }
+
+fun CharSequence.hasKana() =
+    any { it.isKana() }
+
+fun CharSequence.hasCJKOrKana() =
+    any { it.isCJKOrKana() }
 
 fun CharSequence.hasPunctuation() =
     any { it.isPunctuation() }

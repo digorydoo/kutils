@@ -36,402 +36,186 @@ class Kokuban {
         return this
     }
 
-    fun text(t: Any?): Kokuban {
-        result += "$t"; return this
+    private fun ensureTrailingWhitespaceOrEmpty(s: String): String = when {
+        s.isEmpty() || s.endsWith("\n") || s.endsWith(" ") -> s
+        else -> "$s "
     }
 
-    fun bold(t: Any?): Kokuban {
-        result += "${Tty.BOLD}${t}${Tty.BOLD_OFF}"; return this
+    // If default is null, empty strings are not allowed. To allow empty strings, set default to "".
+    fun askString(prompt: String = "", default: String? = null): String {
+        val suffix = when (default) {
+            null -> ""
+            else -> "[$default] "
+        }
+        print(ensureTrailingWhitespaceOrEmpty(prompt) + suffix)
+
+        while (true) {
+            val s = readln().trim()
+            if (s.isNotEmpty()) return s
+            if (default != null) return default
+            println("An empty answer is not acceptable.")
+        }
     }
 
-    fun faint(t: Any?): Kokuban {
-        result += "${Tty.FAINT}${t}${Tty.FAINT_OFF}"; return this
+    fun askInt(prompt: String = "", default: Int? = null, min: Int? = null, max: Int? = null): Int {
+        val suffix = when (default) {
+            null -> ""
+            else -> "[$default] "
+        }
+        print(ensureTrailingWhitespaceOrEmpty(prompt) + suffix)
+
+        while (true) {
+            val s = readln().trim()
+            if (default != null && s.isEmpty()) return default
+            val i = s.toIntOrNull()
+            val valid = i != null && i >= (min ?: Int.MIN_VALUE) && i <= (max ?: Int.MAX_VALUE)
+            if (valid) return i
+            print("Please enter a valid integer number")
+
+            when (min) {
+                null -> when (max) {
+                    null -> println(".")
+                    else -> println(" that is less or equal $max")
+                }
+                else -> when (max) {
+                    null -> println(" that is greater or equal $min")
+                    else -> println(" between $min and $max")
+                }
+            }
+        }
     }
 
-    fun italic(t: Any?): Kokuban {
-        result += "${Tty.ITALIC}${t}${Tty.ITALIC_OFF}"; return this
+    fun askYesOrNo(prompt: String = "", default: Boolean? = null): Boolean {
+        val suffix = when (default) {
+            true -> "[Y/n] "
+            false -> "[y/N] "
+            null -> "[y/n] "
+        }
+        print(ensureTrailingWhitespaceOrEmpty(prompt) + suffix)
+
+        while (true) {
+            val s = readln().trim()
+            if (default != null && s.isEmpty()) return default
+
+            when (s.lowercase()) {
+                "y", "yes" -> return true
+                "n", "no" -> return false
+                else -> println("Please answer with yes or no!")
+            }
+        }
     }
 
-    fun underline(t: Any?): Kokuban {
-        result += "${Tty.UNDERLINE}${t}${Tty.UNDERLINE_OFF}"; return this
+    private fun addToResult(s: String): Kokuban {
+        result += s
+        return this
     }
 
-    fun blink(t: Any?): Kokuban {
-        result += "${Tty.BLINK}${t}${Tty.BLINK_OFF}"; return this
-    }
+    fun text(t: Any?) = addToResult("$t")
+    fun bold(t: Any?) = addToResult("${Tty.BOLD}$t${Tty.BOLD_OFF}")
+    fun faint(t: Any?) = addToResult("${Tty.FAINT}$t${Tty.FAINT_OFF}")
+    fun italic(t: Any?) = addToResult("${Tty.ITALIC}$t${Tty.ITALIC_OFF}")
+    fun underline(t: Any?) = addToResult("${Tty.UNDERLINE}$t${Tty.UNDERLINE_OFF}")
+    fun blink(t: Any?) = addToResult("${Tty.BLINK}$t${Tty.BLINK_OFF}")
+    fun reverse(t: Any?) = addToResult("${Tty.REVERSE}$t${Tty.REVERSE_OFF}")
+    fun conceal(t: Any?) = addToResult("${Tty.CONCEAL}$t${Tty.CONCEAL_OFF}")
+    fun white(t: Any?) = addToResult("${Tty.WHITE}$t${Tty.FG_DEFAULT}")
+    fun red(t: Any?) = addToResult("${Tty.RED}$t${Tty.FG_DEFAULT}")
+    fun green(t: Any?) = addToResult("${Tty.GREEN}$t${Tty.FG_DEFAULT}")
+    fun yellow(t: Any?) = addToResult("${Tty.YELLOW}$t${Tty.FG_DEFAULT}")
+    fun blue(t: Any?) = addToResult("${Tty.BLUE}$t${Tty.FG_DEFAULT}")
+    fun magenta(t: Any?) = addToResult("${Tty.MAGENTA}$t${Tty.FG_DEFAULT}")
+    fun cyan(t: Any?) = addToResult("${Tty.CYAN}$t${Tty.FG_DEFAULT}")
+    fun brightRed(t: Any?) = addToResult("${Tty.BRIGHT_RED}$t${Tty.FG_DEFAULT}")
+    fun brightGreen(t: Any?) = addToResult("${Tty.BRIGHT_GREEN}$t${Tty.FG_DEFAULT}")
+    fun brightYellow(t: Any?) = addToResult("${Tty.BRIGHT_YELLOW}$t${Tty.FG_DEFAULT}")
+    fun brightBlue(t: Any?) = addToResult("${Tty.BRIGHT_BLUE}$t${Tty.FG_DEFAULT}")
+    fun brightMagenta(t: Any?) = addToResult("${Tty.BRIGHT_MAGENTA}$t${Tty.FG_DEFAULT}")
+    fun brightCyan(t: Any?) = addToResult("${Tty.BRIGHT_CYAN}$t${Tty.FG_DEFAULT}")
+    fun brightWhite(t: Any?) = addToResult("${Tty.BRIGHT_WHITE}$t${Tty.FG_DEFAULT}")
+    fun ltGrey(t: Any?) = addToResult("${Tty.LIGHT_GREY}$t${Tty.FG_DEFAULT}")
+    fun dkGrey(t: Any?) = addToResult("${Tty.DARK_GREY}$t${Tty.FG_DEFAULT}")
+    fun orange(t: Any?) = addToResult("${Tty.ORANGE}$t${Tty.FG_DEFAULT}")
+    fun pink(t: Any?) = addToResult("${Tty.PINK}$t${Tty.FG_DEFAULT}")
+    fun bgWhite(t: Any?) = addToResult("${Tty.BG_WHITE}$t${Tty.BG_DEFAULT}")
+    fun bgRed(t: Any?) = addToResult("${Tty.BG_RED}$t${Tty.BG_DEFAULT}")
+    fun bgGreen(t: Any?) = addToResult("${Tty.BG_GREEN}$t${Tty.BG_DEFAULT}")
+    fun bgYellow(t: Any?) = addToResult("${Tty.BG_YELLOW}$t${Tty.BG_DEFAULT}")
+    fun bgBlue(t: Any?) = addToResult("${Tty.BG_BLUE}$t${Tty.BG_DEFAULT}")
+    fun bgMagenta(t: Any?) = addToResult("${Tty.BG_MAGENTA}$t${Tty.BG_DEFAULT}")
+    fun bgCyan(t: Any?) = addToResult("${Tty.BG_CYAN}$t${Tty.BG_DEFAULT}")
+    fun bgBrightRed(t: Any?) = addToResult("${Tty.BG_BRIGHT_RED}$t${Tty.BG_DEFAULT}")
+    fun bgBrightGreen(t: Any?) = addToResult("${Tty.BG_BRIGHT_GREEN}$t${Tty.BG_DEFAULT}")
+    fun bgBrightYellow(t: Any?) = addToResult("${Tty.BG_BRIGHT_YELLOW}$t${Tty.BG_DEFAULT}")
+    fun bgBrightBlue(t: Any?) = addToResult("${Tty.BG_BRIGHT_BLUE}$t${Tty.BG_DEFAULT}")
+    fun bgBrightMagenta(t: Any?) = addToResult("${Tty.BG_BRIGHT_MAGENTA}$t${Tty.BG_DEFAULT}")
+    fun bgBrightCyan(t: Any?) = addToResult("${Tty.BG_BRIGHT_CYAN}$t${Tty.BG_DEFAULT}")
+    fun bgBrightWhite(t: Any?) = addToResult("${Tty.BG_BRIGHT_WHITE}$t${Tty.BG_DEFAULT}")
+    fun bgLtGrey(t: Any?) = addToResult("${Tty.BG_LIGHT_GREY}$t${Tty.BG_DEFAULT}")
+    fun bgDkGrey(t: Any?) = addToResult("${Tty.BG_DARK_GREY}$t${Tty.BG_DEFAULT}")
+    fun bgOrange(t: Any?) = addToResult("${Tty.BG_ORANGE}$t${Tty.BG_DEFAULT}")
+    fun bgPink(t: Any?) = addToResult("${Tty.BG_PINK}$t${Tty.BG_DEFAULT}")
 
-    fun reverse(t: Any?): Kokuban {
-        result += "${Tty.REVERSE}${t}${Tty.REVERSE_OFF}"; return this
-    }
+    val plain get() = addToResult(Tty.PLAIN)
+    val bold get() = addToResult(Tty.BOLD)
+    val faint get() = addToResult(Tty.FAINT)
+    val italic get() = addToResult(Tty.ITALIC)
+    val underline get() = addToResult(Tty.UNDERLINE)
+    val blink get() = addToResult(Tty.BLINK)
+    val reverse get() = addToResult(Tty.REVERSE)
+    val conceal get() = addToResult(Tty.CONCEAL)
 
-    fun conceal(t: Any?): Kokuban {
-        result += "${Tty.CONCEAL}${t}${Tty.CONCEAL_OFF}"; return this
-    }
+    val boldOff get() = addToResult(Tty.BOLD_OFF)
+    val faintOff get() = addToResult(Tty.FAINT_OFF)
+    val italicOff get() = addToResult(Tty.ITALIC_OFF)
+    val underlineOff get() = addToResult(Tty.UNDERLINE_OFF)
+    val blinkOff get() = addToResult(Tty.BLINK_OFF)
+    val reverseOff get() = addToResult(Tty.REVERSE_OFF)
+    val concealOff get() = addToResult(Tty.CONCEAL_OFF)
 
-    fun white(t: Any?): Kokuban {
-        result += "${Tty.WHITE}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val white get() = addToResult(Tty.WHITE)
+    val red get() = addToResult(Tty.RED)
+    val green get() = addToResult(Tty.GREEN)
+    val yellow get() = addToResult(Tty.YELLOW)
+    val blue get() = addToResult(Tty.BLUE)
+    val magenta get() = addToResult(Tty.MAGENTA)
+    val cyan get() = addToResult(Tty.CYAN)
 
-    fun red(t: Any?): Kokuban {
-        result += "${Tty.RED}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val brightRed get() = addToResult(Tty.BRIGHT_RED)
+    val brightGreen get() = addToResult(Tty.BRIGHT_GREEN)
+    val brightYellow get() = addToResult(Tty.BRIGHT_YELLOW)
+    val brightBlue get() = addToResult(Tty.BRIGHT_BLUE)
+    val brightMagenta get() = addToResult(Tty.BRIGHT_MAGENTA)
+    val brightCyan get() = addToResult(Tty.BRIGHT_CYAN)
+    val brightWhite get() = addToResult(Tty.BRIGHT_WHITE)
 
-    fun green(t: Any?): Kokuban {
-        result += "${Tty.GREEN}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val ltGrey get() = addToResult(Tty.LIGHT_GREY)
+    val dkGrey get() = addToResult(Tty.DARK_GREY)
+    val orange get() = addToResult(Tty.ORANGE)
+    val pink get() = addToResult(Tty.PINK)
 
-    fun yellow(t: Any?): Kokuban {
-        result += "${Tty.YELLOW}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val fgDefault get() = addToResult(Tty.FG_DEFAULT)
+    val bgDefault get() = addToResult(Tty.BG_DEFAULT)
 
-    fun blue(t: Any?): Kokuban {
-        result += "${Tty.BLUE}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val bgWhite get() = addToResult(Tty.BG_WHITE)
+    val bgRed get() = addToResult(Tty.BG_RED)
+    val bgGreen get() = addToResult(Tty.BG_GREEN)
+    val bgYellow get() = addToResult(Tty.BG_YELLOW)
+    val bgBlue get() = addToResult(Tty.BG_BLUE)
+    val bgMagenta get() = addToResult(Tty.BG_MAGENTA)
+    val bgCyan get() = addToResult(Tty.BG_CYAN)
 
-    fun magenta(t: Any?): Kokuban {
-        result += "${Tty.MAGENTA}${t}${Tty.FG_DEFAULT}"; return this
-    }
+    val bgBrightRed get() = addToResult(Tty.BG_BRIGHT_RED)
+    val bgBrightGreen get() = addToResult(Tty.BG_BRIGHT_GREEN)
+    val bgBrightYellow get() = addToResult(Tty.BG_BRIGHT_YELLOW)
+    val bgBrightBlue get() = addToResult(Tty.BG_BRIGHT_BLUE)
+    val bgBrightMagenta get() = addToResult(Tty.BG_BRIGHT_MAGENTA)
+    val bgBrightCyan get() = addToResult(Tty.BG_BRIGHT_CYAN)
+    val bgBrightWhite get() = addToResult(Tty.BG_BRIGHT_WHITE)
 
-    fun cyan(t: Any?): Kokuban {
-        result += "${Tty.CYAN}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightRed(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_RED}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightGreen(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_GREEN}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightYellow(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_YELLOW}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightBlue(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_BLUE}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightMagenta(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_MAGENTA}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightCyan(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_CYAN}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun brightWhite(t: Any?): Kokuban {
-        result += "${Tty.BRIGHT_WHITE}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun ltGrey(t: Any?): Kokuban {
-        result += "${Tty.LIGHT_GREY}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun dkGrey(t: Any?): Kokuban {
-        result += "${Tty.DARK_GREY}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun orange(t: Any?): Kokuban {
-        result += "${Tty.ORANGE}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun pink(t: Any?): Kokuban {
-        result += "${Tty.PINK}${t}${Tty.FG_DEFAULT}"; return this
-    }
-
-    fun bgWhite(t: Any?): Kokuban {
-        result += "${Tty.BG_WHITE}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgRed(t: Any?): Kokuban {
-        result += "${Tty.BG_RED}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgGreen(t: Any?): Kokuban {
-        result += "${Tty.BG_GREEN}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgYellow(t: Any?): Kokuban {
-        result += "${Tty.BG_YELLOW}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBlue(t: Any?): Kokuban {
-        result += "${Tty.BG_BLUE}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgMagenta(t: Any?): Kokuban {
-        result += "${Tty.BG_MAGENTA}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgCyan(t: Any?): Kokuban {
-        result += "${Tty.BG_CYAN}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightRed(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_RED}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightGreen(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_GREEN}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightYellow(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_YELLOW}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightBlue(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_BLUE}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightMagenta(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_MAGENTA}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightCyan(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_CYAN}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgBrightWhite(t: Any?): Kokuban {
-        result += "${Tty.BG_BRIGHT_WHITE}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgLtGrey(t: Any?): Kokuban {
-        result += "${Tty.BG_LIGHT_GREY}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgDkGrey(t: Any?): Kokuban {
-        result += "${Tty.BG_DARK_GREY}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgOrange(t: Any?): Kokuban {
-        result += "${Tty.BG_ORANGE}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    fun bgPink(t: Any?): Kokuban {
-        result += "${Tty.BG_PINK}${t}${Tty.BG_DEFAULT}"; return this
-    }
-
-    val plain: Kokuban
-        get() {
-            result += Tty.PLAIN; return this
-        }
-    val bold: Kokuban
-        get() {
-            result += Tty.BOLD; return this
-        }
-    val faint: Kokuban
-        get() {
-            result += Tty.FAINT; return this
-        }
-    val italic: Kokuban
-        get() {
-            result += Tty.ITALIC; return this
-        }
-    val underline: Kokuban
-        get() {
-            result += Tty.UNDERLINE; return this
-        }
-    val blink: Kokuban
-        get() {
-            result += Tty.BLINK; return this
-        }
-    val reverse: Kokuban
-        get() {
-            result += Tty.REVERSE; return this
-        }
-    val conceal: Kokuban
-        get() {
-            result += Tty.CONCEAL; return this
-        }
-
-    val boldOff: Kokuban
-        get() {
-            result += Tty.BOLD_OFF; return this
-        }
-    val faintOff: Kokuban
-        get() {
-            result += Tty.FAINT_OFF; return this
-        }
-    val italicOff: Kokuban
-        get() {
-            result += Tty.ITALIC_OFF; return this
-        }
-    val underlineOff: Kokuban
-        get() {
-            result += Tty.UNDERLINE_OFF; return this
-        }
-    val blinkOff: Kokuban
-        get() {
-            result += Tty.BLINK_OFF; return this
-        }
-    val reverseOff: Kokuban
-        get() {
-            result += Tty.REVERSE_OFF; return this
-        }
-    val concealOff: Kokuban
-        get() {
-            result += Tty.CONCEAL_OFF; return this
-        }
-
-    val white: Kokuban
-        get() {
-            result += Tty.WHITE; return this
-        }
-    val red: Kokuban
-        get() {
-            result += Tty.RED; return this
-        }
-    val green: Kokuban
-        get() {
-            result += Tty.GREEN; return this
-        }
-    val yellow: Kokuban
-        get() {
-            result += Tty.YELLOW; return this
-        }
-    val blue: Kokuban
-        get() {
-            result += Tty.BLUE; return this
-        }
-    val magenta: Kokuban
-        get() {
-            result += Tty.MAGENTA; return this
-        }
-    val cyan: Kokuban
-        get() {
-            result += Tty.CYAN; return this
-        }
-
-    val brightRed: Kokuban
-        get() {
-            result += Tty.BRIGHT_RED; return this
-        }
-    val brightGreen: Kokuban
-        get() {
-            result += Tty.BRIGHT_GREEN; return this
-        }
-    val brightYellow: Kokuban
-        get() {
-            result += Tty.BRIGHT_YELLOW; return this
-        }
-    val brightBlue: Kokuban
-        get() {
-            result += Tty.BRIGHT_BLUE; return this
-        }
-    val brightMagenta: Kokuban
-        get() {
-            result += Tty.BRIGHT_MAGENTA; return this
-        }
-    val brightCyan: Kokuban
-        get() {
-            result += Tty.BRIGHT_CYAN; return this
-        }
-    val brightWhite: Kokuban
-        get() {
-            result += Tty.BRIGHT_WHITE; return this
-        }
-
-    val ltGrey: Kokuban
-        get() {
-            result += Tty.LIGHT_GREY; return this
-        }
-    val dkGrey: Kokuban
-        get() {
-            result += Tty.DARK_GREY; return this
-        }
-    val orange: Kokuban
-        get() {
-            result += Tty.ORANGE; return this
-        }
-    val pink: Kokuban
-        get() {
-            result += Tty.PINK; return this
-        }
-
-    val fgDefault: Kokuban
-        get() {
-            result += Tty.FG_DEFAULT; return this
-        }
-    val bgDefault: Kokuban
-        get() {
-            result += Tty.BG_DEFAULT; return this
-        }
-
-    val bgWhite: Kokuban
-        get() {
-            result += Tty.BG_WHITE; return this
-        }
-    val bgRed: Kokuban
-        get() {
-            result += Tty.BG_RED; return this
-        }
-    val bgGreen: Kokuban
-        get() {
-            result += Tty.BG_GREEN; return this
-        }
-    val bgYellow: Kokuban
-        get() {
-            result += Tty.BG_YELLOW; return this
-        }
-    val bgBlue: Kokuban
-        get() {
-            result += Tty.BG_BLUE; return this
-        }
-    val bgMagenta: Kokuban
-        get() {
-            result += Tty.BG_MAGENTA; return this
-        }
-    val bgCyan: Kokuban
-        get() {
-            result += Tty.BG_CYAN; return this
-        }
-
-    val bgBrightRed: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_RED; return this
-        }
-    val bgBrightGreen: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_GREEN; return this
-        }
-    val bgBrightYellow: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_YELLOW; return this
-        }
-    val bgBrightBlue: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_BLUE; return this
-        }
-    val bgBrightMagenta: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_MAGENTA; return this
-        }
-    val bgBrightCyan: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_CYAN; return this
-        }
-    val bgBrightWhite: Kokuban
-        get() {
-            result += Tty.BG_BRIGHT_WHITE; return this
-        }
-
-    val bgLtGrey: Kokuban
-        get() {
-            result += Tty.BG_LIGHT_GREY; return this
-        }
-    val bgDkGrey: Kokuban
-        get() {
-            result += Tty.BG_DARK_GREY; return this
-        }
-    val bgOrange: Kokuban
-        get() {
-            result += Tty.BG_ORANGE; return this
-        }
-    val bgPink: Kokuban
-        get() {
-            result += Tty.BG_PINK; return this
-        }
+    val bgLtGrey get() = addToResult(Tty.BG_LIGHT_GREY)
+    val bgDkGrey get() = addToResult(Tty.BG_DARK_GREY)
+    val bgOrange get() = addToResult(Tty.BG_ORANGE)
+    val bgPink get() = addToResult(Tty.BG_PINK)
 
     companion object {
         fun fromException(e: Exception): Kokuban {

@@ -5,8 +5,12 @@ import kotlin.math.abs
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Point3i(open val x: Int, open val y: Int, open val z: Int) {
-    // constructor() doesn't exist -- use Point3i.zero instead!
+    // constructor() with empty arguments intentionally not implemented -- use Point3i.zero instead!
     constructor(pt: Point3i): this(pt.x, pt.y, pt.z)
+
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
 
     open operator fun plus(other: Point3i) =
         Point3i(x + other.x, y + other.y, z + other.z)

@@ -6,6 +6,13 @@ import kotlin.test.assertTrue
 // Kotlin has assertContains(range, value, msg), but these functions describe the error message better.
 // Copy this into other modules as needed, because test helpers cannot be easily shared.
 
+fun assertWithin(range: ClosedRange<Int>, value: Int, msg: String? = null) =
+    assertTrue(
+        value in range,
+        (msg?.let { "$msg: " } ?: "") + "Expected $value to be inside range " +
+            range.start + " .. " + range.endInclusive
+    )
+
 fun assertWithin(range: ClosedRange<Float>, value: Float, msg: String? = null) =
     assertTrue(
         value in range,

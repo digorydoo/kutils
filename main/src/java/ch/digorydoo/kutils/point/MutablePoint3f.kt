@@ -61,6 +61,10 @@ class MutablePoint3f(theX: Float, theY: Float, theZ: Float): Point3f(theX, theY,
         z = lerp(pt1.z, pt2.z, rel)
     }
 
+    fun setToNormal(p0: Point3f, p1: Point3f, p2: Point3f) {
+        set(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z).cross(p2.x - p0.x, p2.y - p0.y, p2.z - p0.z).normalize()
+    }
+
     fun add(pt: Point3f): MutablePoint3f {
         x += pt.x
         y += pt.y
@@ -183,6 +187,16 @@ class MutablePoint3f(theX: Float, theY: Float, theZ: Float): Point3f(theX, theY,
         val u = y * pt.z - z * pt.y
         val v = z * pt.x - x * pt.z
         val w = x * pt.y - y * pt.x
+        x = u
+        y = v
+        z = w
+        return this
+    }
+
+    fun cross(x2: Float, y2: Float, z2: Float): MutablePoint3f {
+        val u = y * z2 - z * y2
+        val v = z * x2 - x * z2
+        val w = x * y2 - y * x2
         x = u
         y = v
         z = w

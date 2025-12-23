@@ -44,6 +44,31 @@ open class Recti(
             (top >= r.top || bottom > r.top) &&
             (top < r.bottom || bottom < r.bottom)
 
+    fun newUnreversed(): Recti {
+        val newLeft: Int
+        val newTop: Int
+        val newRight: Int
+        val newBottom: Int
+
+        if (left < right) {
+            newLeft = left
+            newRight = right
+        } else {
+            newLeft = right
+            newRight = left
+        }
+
+        if (top < bottom) {
+            newTop = top
+            newBottom = bottom
+        } else {
+            newTop = bottom
+            newBottom = top
+        }
+
+        return Recti(newLeft, newTop, newRight, newBottom)
+    }
+
     fun toMutable() =
         MutableRecti(left, top, right, bottom)
 

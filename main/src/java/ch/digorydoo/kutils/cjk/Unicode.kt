@@ -26,6 +26,9 @@ object Unicode {
     const val BLACK_RIGHT_FINGER = '\u261b'   // ☛
     const val WHITE_RIGHT_FINGER = '\u261e'   // ☞
 
+    const val KATAKANA_LONG_VOWEL_MARK = '\u30FC' // ー
+    const val CJK_NUMBER_ONE = '\u4E00'           // 一
+
     val ANSI_LOWERCASE_LETTERS = listOf(
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -123,7 +126,7 @@ object Unicode {
     // val CJK_COMPAT_SUPPLEMENT = '\u2F800' .. '\u2FA1F'
 
     val ONE_STROKE_KANJI = arrayOf(
-        '一', '丶', '丿', '乙', '亅'
+        CJK_NUMBER_ONE, '丶', '丿', '乙', '亅'
     )
 
     val TWO_STROKE_KANJI = arrayOf(
@@ -145,6 +148,6 @@ object Unicode {
     val WIDE_DIGITS = arrayOf('０', '１', '２', '３', '４', '５', '６', '７', '８', '９')
 
     val CHINESE_DIGITS = arrayOf(
-        '丸', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '億'
+        '丸', CJK_NUMBER_ONE, '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '億'
     )
 }

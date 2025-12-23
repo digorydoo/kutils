@@ -10,8 +10,13 @@ open class Point4f(
     open val z: Float,
     open val w: Float,
 ) {
-    // constructor() doesn't exist -- use Point4f.zero instead!
+    // constructor() with empty arguments intentionally not implemented -- use Point4f.zero instead!
     constructor(pt: Point4f): this(pt.x, pt.y, pt.z, pt.w)
+
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
+    operator fun component4() = w
 
     open operator fun plus(other: Point4f) =
         Point4f(x + other.x, y + other.y, z + other.z, w + other.w)

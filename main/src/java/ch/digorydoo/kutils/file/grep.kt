@@ -9,25 +9,14 @@ import java.io.File
 
 /**
  * @param file The file to search
- * @param needle The string to search for
- * @param caseInsensitive true=ignore case
+ * @param checkIfLineMatches Callback that should return true for each matching line
  * @param handleMatch Callback; true=continue, false=abort
  */
-fun grep(file: File, needle: String, caseInsensitive: Boolean, handleMatch: (line: String, idx: Int) -> Boolean) {
-    val n = if (caseInsensitive) needle.lowercase() else needle
-    grep(
-        file,
-        checkMatch = { if (caseInsensitive) it.lowercase().contains(n) else it.contains(n) },
-        handleMatch,
-    )
-}
-
-/**
- * @param file The file to search
- * @param checkMatch Callback that should return true for each matching line
- * @param handleMatch Callback; true=continue, false=abort
- */
-fun grep(file: File, checkMatch: (line: String) -> Boolean, handleMatch: (line: String, idx: Int) -> Boolean) {
+fun grep(
+    file: File,
+    checkIfLineMatches: (line: String, idx: Int) -> Boolean,
+    handleMatch: (line: String, idx: Int) -> Boolean,
+) {
     file.bufferedReader().use {
         val iter = it.lineSequence().iterator()
         var idx = 1
@@ -35,7 +24,7 @@ fun grep(file: File, checkMatch: (line: String) -> Boolean, handleMatch: (line: 
         while (iter.hasNext()) {
             val line = iter.next()
 
-            if (checkMatch(line)) {
+            if (checkIfLineMatches(line, idx)) {
                 if (!handleMatch(line, idx)) {
                     break
                 }
@@ -47,33 +36,23 @@ fun grep(file: File, checkMatch: (line: String) -> Boolean, handleMatch: (line: 
 }
 
 /**
- * Grep for a specifically formatted JSON object or array. The first line is expected to consist of an opening brace or
- * opening bracket only. The last line of an object is expected to have an underscore as the key, a null value, and the
- * closing brace. The last line of an array is expected to consist of a null value and the closing bracket.
+ * Grep for a specifically formatted JSON object or array. The first line is expected to consist of an opening brace.
+ * The last line of an object is expected to have an underscore as the key, a null value, and the closing brace. Only
+ * JSON objects are supported at the moment. Each line must consist of a key followed by an object.
  * @param file The file to search
- * @param needle The string to search for
- * @param caseInsensitive true=ignore case
- * @param matchWholeEntriesOnly true=only report lines that contain the string within JSON quotes
+ * @param checkIfLineMatches Callback that should return true for each matching line
+ * @param checkIfValueMatches Callback that should return true for each matching line
  * @param warn Callback; true=continue, false=abort
  * @param handleMatch Callback; true=continue, false=abort
  */
 fun grepJson(
     file: File,
-    needle: String,
-    caseInsensitive: Boolean,
-    matchWholeEntriesOnly: Boolean,
+    checkIfLineMatches: (line: String, idx: Int) -> Boolean,
+    checkIfValueMatches: (value: String, idx: Int) -> Boolean,
     warn: (msg: String, idx: Int) -> Boolean,
     handleMatch: (key: String, value: String, idx: Int) -> Boolean,
 ) {
-    val n = if (matchWholeEntriesOnly) {
-        needle.toJSON() // puts quotes around the encoded string
-    } else {
-        jsonEncode(needle)
-    }
-
-    // TODO support array content
-
-    grep(file, n, caseInsensitive = caseInsensitive) { line, idx ->
+    grep(file, checkIfLineMatches) { line, idx ->
         val trimmed = line.trim()
 
         if (!trimmed.startsWith("\"")) {
@@ -88,7 +67,7 @@ fun grepJson(
             } else {
                 var value = trimmed.substring(colonAt + 1)
 
-                if (!value.lowercase().contains(needle)) {
+                if (!checkIfValueMatches(value, idx)) {
                     // This may happen if the needle was found in the key.
                     warn("Line seems to match in its key.", idx)
                 } else {
@@ -108,5 +87,43 @@ fun grepJson(
                 }
             }
         }
+
+        true // continue
     }
+}
+
+/**
+ * @param file The file to search
+ * @param needle The string to search for
+ * @param caseInsensitive true=ignore case
+ * @param matchWholeEntriesOnly true=only report lines that contain the string within JSON quotes
+ * @param warn Callback; true=continue, false=abort
+ * @param handleMatch Callback; true=continue, false=abort
+ */
+fun grepJson(
+    file: File,
+    needle: String,
+    caseInsensitive: Boolean,
+    matchWholeEntriesOnly: Boolean,
+    warn: (msg: String, idx: Int) -> Boolean,
+    handleMatch: (key: String, value: String, idx: Int) -> Boolean,
+) {
+    // If matchWholeEntriesOnly is true, use toJSON() to put double quotes around the needle.
+    // If matchWholeEntriesOnly is false, use jsonEncode() to encode any special characters inside the needle.
+
+    val n = needle
+        .let { if (matchWholeEntriesOnly) it.toJSON() else jsonEncode(needle) }
+        .let { if (caseInsensitive) it.lowercase() else it }
+
+    val checkMatch = { line: String, idx: Int ->
+        if (caseInsensitive) line.lowercase().contains(n) else line.contains(n)
+    }
+
+    grepJson(
+        file = file,
+        checkIfLineMatches = checkMatch,
+        checkIfValueMatches = checkMatch,
+        warn = warn,
+        handleMatch = handleMatch,
+    )
 }

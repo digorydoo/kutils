@@ -5,13 +5,13 @@ import kotlin.math.max
 import kotlin.math.sqrt
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-open class Point2f(
-    open val x: Float,
-    open val y: Float,
-) {
-    // constructor() doesn't exist -- use Point2f.zero instead!
+open class Point2f(open val x: Float, open val y: Float) {
+    // constructor() with empty arguments intentionally not implemented -- use Point2f.zero instead!
     constructor(ix: Int, iy: Int): this(ix.toFloat(), iy.toFloat())
     constructor(pt: Point2f): this(pt.x, pt.y)
+
+    operator fun component1() = x
+    operator fun component2() = y
 
     open operator fun plus(other: Point2f) =
         Point2f(x + other.x, y + other.y)
