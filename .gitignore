@@ -2,8 +2,4 @@
 local.properties
 build/
 .gradle/
-.idea/caches/
-.idea/libraries/
-.idea/dictionaries/
-.idea/assetWizardSettings.xml
-.idea/workspace.xml
+.idea/

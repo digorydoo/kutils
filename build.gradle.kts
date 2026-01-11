@@ -1,17 +1,11 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 buildscript {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-        classpath(libs.kotlin.gradle.plugin)
-    }
 }
 
-// Unlike "subprojects", "allprojects" includes the root project (this one)
 allprojects {
     repositories {
         mavenCentral()
@@ -19,13 +13,6 @@ allprojects {
 }
 
 subprojects {
-    // The following makes sure that all subprojects having plugin kotlin("jvm") target the same JDK version
-    plugins.withId("org.jetbrains.kotlin.jvm") {
-        the<KotlinJvmProjectExtension>().apply {
-            jvmToolchain(17) // JDK version
-        }
-    }
-
     // The following modifies the configuration of the "test" task in all subprojects
     tasks.withType<Test>().configureEach {
         useJUnitPlatform()

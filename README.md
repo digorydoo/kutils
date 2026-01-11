@@ -4,8 +4,22 @@
 
 License: GNU General Public License v3.0
 
-Project start: 25/Dec/2021
-
 Github: https://github.com/digorydoo/kutils
 
 kutils are a bunch of general Kotlin utils, CJK utils, Math utils.
+
+## Branching
+
+Branch `main` is the main branch and published to GitHub. Work should be squashed before committing to `main`. Here's a
+quick recipe for maintainers how to keep your full history:
+
+```
+$ git checkout feature        # check out your feature branch and start working
+$ git commit -a               # repeatedly commit your changes
+$ git checkout main           # check out github's main branch
+$ git pull                    # make sure you're up-to-date
+$ git merge --squash feature  # squashed commit, resolve any conflicts
+$ git push                    # upload to github
+$ git checkout feature        # go back to your feature branch
+$ git rebase main             # IMPORTANT, otherwise you'll get conflicts later
+```
