@@ -1,5 +1,3 @@
-@file:Suppress("unused", "MemberVisibilityCanBePrivate")
-
 package ch.digorydoo.kutils.cjk
 
 import java.util.*
@@ -8,13 +6,26 @@ import java.util.*
  * Member variable names are supposed to be ISO 639-1.
  * @href https://www.loc.gov/standards/iso639-2/php/code_list.php
  */
-class IntlString {
-    // We use nullable strings here, hoping that this reduces memory footage when not all variants are used.
-    private var _de: String? = null
-    private var _en: String? = null
-    private var _fr: String? = null
-    private var _it: String? = null
-    private var _ja: String? = null
+class IntlString(
+    de: String? = null,
+    en: String? = null,
+    fr: String? = null,
+    it: String? = null,
+    ja: String? = null
+) {
+    constructor(other: IntlString): this(
+        de = other._de,
+        en = other._en,
+        fr = other._fr,
+        it = other._it,
+        ja = other._ja,
+    )
+
+    private var _de = de // this is the variable from the constructor, not the getter!
+    private var _en = en
+    private var _fr = fr
+    private var _it = it
+    private var _ja = ja
 
     var de: String
         get() = _de ?: ""

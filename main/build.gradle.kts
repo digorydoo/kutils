@@ -19,4 +19,6 @@ dependencies {
     // Versions are maintained in gradle/libs.versions.toml
     implementation(platform(kotlin("bom")))
     testImplementation(kotlin("test"))
+
+    implementation(libs.kotlinx.datetime)
 }

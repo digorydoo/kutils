@@ -31,3 +31,15 @@ fun rpadOrEmpty(n: Int, toLen: Int = 4, padChar: Char = ' ') =
         0 -> (Array(toLen) { padChar }).joinToString("")
         else -> rpad(n, toLen, padChar)
     }
+
+fun StringBuilder.appendLPadded(n: Int, toLen: Int = 4, padChar: Char = ' ') {
+    val sn = n.toString()
+    repeat(toLen - sn.length) { append(padChar) }
+    append(sn)
+}
+
+fun StringBuilder.appendRPadded(n: Int, toLen: Int = 4, padChar: Char = ' ') {
+    val sn = n.toString()
+    append(sn)
+    repeat(toLen - sn.length) { append(padChar) }
+}

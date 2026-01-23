@@ -5,6 +5,8 @@ package ch.digorydoo.kutils.utils
 import ch.digorydoo.kutils.cjk.Unicode
 import java.io.File
 import java.io.FileWriter
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 object Log {
     enum class Severity(val level: Int) {
@@ -42,11 +44,12 @@ object Log {
         fileLogLevel?.let { this.fileLogLevel = it }
     }
 
+    @OptIn(ExperimentalTime::class) // necessary when compiling for Android
     fun truncateLogFile() {
         val logFile = logFile ?: return
         try {
             FileWriter(logFile).apply {
-                write("Log started on ${Moment().formatRevDateTime()}\n")
+                write("Log started on ${Clock.System.now()}\n")
                 close()
             }
         } catch (e: Exception) {
@@ -97,12 +100,13 @@ object Log {
         stream.println()
     }
 
+    @OptIn(ExperimentalTime::class) // necessary when compiling for Android
     private fun logToFile(severity: Severity, msg: String) {
         if (severity.level < fileLogLevel.level) return
         val logFile = logFile ?: return
 
         try {
-            val stamp = Moment().formatRevDateTime()
+            val stamp = Clock.System.now().toString() // formatted as ISO-8601
             logFile.appendText("$stamp [${severity.name}] $msg\n")
         } catch (e: Exception) {
             logToTty(Severity.ERROR, "Failed to write log entry to file (${logFile.path}): ${e.message}")
