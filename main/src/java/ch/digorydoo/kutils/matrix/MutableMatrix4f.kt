@@ -1,10 +1,10 @@
 package ch.digorydoo.kutils.matrix
 
 import ch.digorydoo.kutils.math.lerp
-import ch.digorydoo.kutils.point.Point3f
 import ch.digorydoo.kutils.utils.mapInplace
 import ch.digorydoo.kutils.utils.newFloatBuffer
 import ch.digorydoo.kutils.utils.skip
+import ch.digorydoo.kutils.vector.Vector3f
 import java.nio.FloatBuffer
 import kotlin.math.cos
 import kotlin.math.sin
@@ -57,8 +57,8 @@ class MutableMatrix4f: Matrix4f {
         setIdentity(_buffer)
     }
 
-    fun setScaling(pt: Point3f, clear: Boolean = true) =
-        setScaling(pt.x, pt.y, pt.z, clear)
+    fun setScaling(vec: Vector3f, clear: Boolean = true) =
+        setScaling(vec.x, vec.y, vec.z, clear)
 
     fun setScaling(sx: Double, sy: Double, sz: Double, clear: Boolean = true) =
         setScaling(sx.toFloat(), sy.toFloat(), sz.toFloat(), clear)
@@ -98,8 +98,8 @@ class MutableMatrix4f: Matrix4f {
         }
     }
 
-    fun setTranslation(pt: Point3f, clear: Boolean = true) =
-        setTranslation(pt.x, pt.y, pt.z, clear)
+    fun setTranslation(vec: Vector3f, clear: Boolean = true) =
+        setTranslation(vec.x, vec.y, vec.z, clear)
 
     fun setTranslation(tx: Double, ty: Double, tz: Double, clear: Boolean = true) =
         setTranslation(tx.toFloat(), ty.toFloat(), tz.toFloat(), clear)
@@ -132,7 +132,7 @@ class MutableMatrix4f: Matrix4f {
         }
     }
 
-    fun setScaleTranslation(scaling: Point3f, translation: Point3f, clear: Boolean = true) {
+    fun setScaleTranslation(scaling: Vector3f, translation: Vector3f, clear: Boolean = true) {
         _buffer.position(0)
         _buffer.put(scaling.x)
 

@@ -1,10 +1,10 @@
 package ch.digorydoo.kutils.matrix
 
-import ch.digorydoo.kutils.point.Point3f
 import ch.digorydoo.kutils.string.toPrecision
 import ch.digorydoo.kutils.utils.mapInplace
 import ch.digorydoo.kutils.utils.newFloatBuffer
 import ch.digorydoo.kutils.utils.toList
+import ch.digorydoo.kutils.vector.Vector3f
 import kotlin.test.*
 
 internal class MutableMatrix4fTest {
@@ -194,7 +194,7 @@ internal class MutableMatrix4fTest {
             """.trimIndent()
         )
 
-        m.setScaling(Point3f(5, 6, 7)) // here we test Point3f
+        m.setScaling(Vector3f(5, 6, 7)) // here we test Vector3f
         assertEquals(
             m.toString(),
             """
@@ -231,7 +231,7 @@ internal class MutableMatrix4fTest {
             """.trimIndent()
         )
 
-        m.setTranslation(Point3f(9, 8, 7)) // here we test Point3f
+        m.setTranslation(Vector3f(9, 8, 7)) // here we test Vector3f
         assertEquals(
             m.toString(),
             """
@@ -514,8 +514,8 @@ internal class MutableMatrix4fTest {
 
     @Test
     fun shouldProperlyScaleTranslate() {
-        val translation = Point3f(2.0f, 3.0f, 7.0f)
-        val scaling = Point3f(9.0f, 11.0f, 13.0f)
+        val translation = Vector3f(2.0f, 3.0f, 7.0f)
+        val scaling = Vector3f(9.0f, 11.0f, 13.0f)
 
         // First we do it one by one.
 

@@ -1,45 +1,45 @@
-package ch.digorydoo.kutils.point
+package ch.digorydoo.kutils.vector
 
 import kotlin.test.*
 
-internal class Point2fSetTest {
+internal class Vector2fSetTest {
     @Test
-    fun shouldCreateProperEmptySet() {
-        val set = Point2fSet()
+    fun `should create proper empty set`() {
+        val set = Vector2fSet()
         assertEquals(0, set.size)
         assertTrue(set.isEmpty())
         assertEquals(set.toString(), "{}")
     }
 
     @Test
-    fun shouldAddDistinctPoints() {
-        val set = Point2fSet()
+    fun `should add distinct vectors`() {
+        val set = Vector2fSet()
 
-        set.add(Point2f(3.5f, 5.9f))
+        set.add(Vector2f(3.5f, 5.9f))
         assertEquals(set.toString(), "{(3.5, 5.9)}")
 
-        set.add(Point2f(5.9f, 3.5f))
+        set.add(Vector2f(5.9f, 3.5f))
         assertEquals(set.toString(), "{(3.5, 5.9), (5.9, 3.5)}")
 
-        set.add(Point2f(3.5f, 5.9f))
+        set.add(Vector2f(3.5f, 5.9f))
         assertEquals(set.toString(), "{(3.5, 5.9), (5.9, 3.5)}")
 
-        set.add(Point2f(5.9f, 3.5f))
+        set.add(Vector2f(5.9f, 3.5f))
         assertEquals(set.toString(), "{(3.5, 5.9), (5.9, 3.5)}")
 
-        set.add(Point2f(0.0f, 0.0f))
+        set.add(Vector2f(0.0f, 0.0f))
         assertEquals(set.toString(), "{(3.5, 5.9), (5.9, 3.5), (0.0, 0.0)}")
     }
 
     @Test
-    fun shouldIterateOverDistinctMembers() {
+    fun `should iterate over distinct members`() {
         val arr = arrayOf(
-            Point2f(1.1f, 2.2f),
-            Point2f(3.3f, 4.2f),
-            Point2f(5.5f, 6.6f),
-            Point2f(3.3f, 4.2f),
+            Vector2f(1.1f, 2.2f),
+            Vector2f(3.3f, 4.2f),
+            Vector2f(5.5f, 6.6f),
+            Vector2f(3.3f, 4.2f),
         )
-        val set = Point2fSet()
+        val set = Vector2fSet()
         set.add(arr[0])
         set.add(arr[1])
         set.add(arr[2])
@@ -48,26 +48,26 @@ internal class Point2fSetTest {
         var count = 0
 
         set.forEach {
-            val pt = arr[count++]
-            assertTrue(pt.hasSameValues(it))
+            val vec = arr[count++]
+            assertTrue(vec.hasSameValues(it))
         }
 
-        assertEquals(count, 3) // because the fourth pt is not a distinct pt
+        assertEquals(count, 3) // because the fourth vec is not a distinct vec
     }
 
     @Test
-    fun shouldAddNewInstances() {
-        val set = Point2fSet()
+    fun `should add new instances`() {
+        val set = Vector2fSet()
 
-        val pt = Point2f(8.2f, 4.2f)
-        set.add(pt)
+        val vec = Vector2f(8.2f, 4.2f)
+        set.add(vec)
 
         var count = 0
 
         set.forEach {
-            assertNotSame(pt, it)
-            assertTrue(pt.hasSameValues(it))
-            assertTrue(it.hasSameValues(pt))
+            assertNotSame(vec, it)
+            assertTrue(vec.hasSameValues(it))
+            assertTrue(it.hasSameValues(vec))
             count++
         }
 
@@ -75,11 +75,11 @@ internal class Point2fSetTest {
     }
 
     @Test
-    fun shouldProperlyImplementClear() {
-        val set = Point2fSet()
-        set.add(Point2f(1.1f, 2.2f))
-        set.add(Point2f(3.3f, 4.2f))
-        set.add(Point2f(5.5f, 6.6f))
+    fun `should properly implement clear`() {
+        val set = Vector2fSet()
+        set.add(Vector2f(1.1f, 2.2f))
+        set.add(Vector2f(3.3f, 4.2f))
+        set.add(Vector2f(5.5f, 6.6f))
         assertEquals(set.size, 3)
         assertFalse(set.isEmpty())
         assertEquals(set.toString(), "{(1.1, 2.2), (3.3, 4.2), (5.5, 6.6)}")
@@ -91,7 +91,7 @@ internal class Point2fSetTest {
     }
 
     @Test
-    fun shouldAddAllFromFloatArray() {
+    fun `should add all from FloatArray`() {
         val arr = floatArrayOf(
             1.1f, 2.2f,
             3.3f, 4.2f,
@@ -101,7 +101,7 @@ internal class Point2fSetTest {
             5.5f, 6.6f, // same!
         )
 
-        val set = Point2fSet()
+        val set = Vector2fSet()
         set.addAll(arr)
         assertEquals(set.size, 4)
         assertFalse(set.isEmpty())
@@ -109,16 +109,16 @@ internal class Point2fSetTest {
 
         assertFails {
             // This should fail, because the number of floats is odd
-            Point2fSet().addAll(floatArrayOf(1.1f, 2.2f, 3.3f))
+            Vector2fSet().addAll(floatArrayOf(1.1f, 2.2f, 3.3f))
         }
     }
 
     @Test
-    fun shouldFindAllIndices() {
-        val set = Point2fSet().apply {
-            add(Point2f(1.1f, 5.0f))
-            add(Point2f(2.2f, 4.2f))
-            add(Point2f(3.3f, 3.9f))
+    fun `should find all indices`() {
+        val set = Vector2fSet().apply {
+            add(Vector2f(1.1f, 5.0f))
+            add(Vector2f(2.2f, 4.2f))
+            add(Vector2f(3.3f, 3.9f))
         }
 
         val l0 = set.findIndices(floatArrayOf())
@@ -152,26 +152,26 @@ internal class Point2fSetTest {
     }
 
     @Test
-    fun shouldConvertToMutableList() {
-        val set = Point2fSet().apply {
-            add(Point2f(1.1f, 5.0f))
-            add(Point2f(2.2f, 4.2f))
-            add(Point2f(3.3f, 3.9f))
-            add(Point2f(1.1f, 5.0f))
+    fun `should convert to MutableList`() {
+        val set = Vector2fSet().apply {
+            add(Vector2f(1.1f, 5.0f))
+            add(Vector2f(2.2f, 4.2f))
+            add(Vector2f(3.3f, 3.9f))
+            add(Vector2f(1.1f, 5.0f))
         }
         val list = set.toMutableList()
-        assertIs<MutableList<Point2f>>(list)
+        assertIs<MutableList<Vector2f>>(list)
         assertEquals(list.size, 3)
         assertEquals(list.joinToString(", "), "(1.1, 5.0), (2.2, 4.2), (3.3, 3.9)")
     }
 
     @Test
-    fun shouldConvertToFloatArray() {
-        val set = Point2fSet().apply {
-            add(Point2f(1.1f, 5.0f))
-            add(Point2f(2.2f, 4.2f))
-            add(Point2f(3.3f, 3.9f))
-            add(Point2f(1.1f, 5.0f))
+    fun `should convert to FloatArray`() {
+        val set = Vector2fSet().apply {
+            add(Vector2f(1.1f, 5.0f))
+            add(Vector2f(2.2f, 4.2f))
+            add(Vector2f(3.3f, 3.9f))
+            add(Vector2f(1.1f, 5.0f))
         }
         val arr = set.toFloatArray()
         assertIs<FloatArray>(arr)

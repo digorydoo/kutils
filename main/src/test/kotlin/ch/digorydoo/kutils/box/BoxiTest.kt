@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.box
 
-import ch.digorydoo.kutils.point.Point3f
+import ch.digorydoo.kutils.vector.Vector3f
 import kotlin.test.*
 
 internal class BoxiTest {
@@ -69,38 +69,38 @@ internal class BoxiTest {
         assertEquals(b.ysize, 2)
         assertEquals(b.zsize, 3)
 
-        assertTrue(b.contains(Point3f(3.0f, 7.0f, 2.0f)))
+        assertTrue(b.contains(Vector3f(3.0f, 7.0f, 2.0f)))
 
-        assertTrue(b.contains(Point3f(5.9f, 7.0f, 2.0f)))
-        assertFalse(b.contains(Point3f(6.0f, 7.0f, 2.0f)))
-        assertFalse(b.contains(Point3f(2.9f, 7.0f, 2.0f)))
+        assertTrue(b.contains(Vector3f(5.9f, 7.0f, 2.0f)))
+        assertFalse(b.contains(Vector3f(6.0f, 7.0f, 2.0f)))
+        assertFalse(b.contains(Vector3f(2.9f, 7.0f, 2.0f)))
 
-        assertTrue(b.contains(Point3f(3.0f, 8.9f, 2.0f)))
-        assertFalse(b.contains(Point3f(3.0f, 9.0f, 2.0f)))
-        assertFalse(b.contains(Point3f(3.0f, 6.9f, 2.0f)))
+        assertTrue(b.contains(Vector3f(3.0f, 8.9f, 2.0f)))
+        assertFalse(b.contains(Vector3f(3.0f, 9.0f, 2.0f)))
+        assertFalse(b.contains(Vector3f(3.0f, 6.9f, 2.0f)))
 
-        assertTrue(b.contains(Point3f(3.0f, 7.0f, 4.9f)))
-        assertFalse(b.contains(Point3f(3.0f, 7.0f, 5.0f)))
-        assertFalse(b.contains(Point3f(3.0f, 7.0f, 1.9f)))
+        assertTrue(b.contains(Vector3f(3.0f, 7.0f, 4.9f)))
+        assertFalse(b.contains(Vector3f(3.0f, 7.0f, 5.0f)))
+        assertFalse(b.contains(Vector3f(3.0f, 7.0f, 1.9f)))
     }
 
     @Test
     fun shouldProperlyComputeDistance() {
-        assertEquals(0.0f, Boxi().distanceFrom(Point3f(0.0f, 0.0f, 0.0f)))
+        assertEquals(0.0f, Boxi().distanceFrom(Vector3f(0.0f, 0.0f, 0.0f)))
 
-        assertEquals(0.0f, Boxi(10, 20, 30, 40, 50, 60).distanceFrom(Point3f(20.0f, 30.0f, 40.0f)))
-        assertEquals(13.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Point3f(15, 15, 0)))
-        assertEquals(12.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Point3f(15, 0, 15)))
-        assertEquals(11.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Point3f(0, 15, 15)))
+        assertEquals(0.0f, Boxi(10, 20, 30, 40, 50, 60).distanceFrom(Vector3f(20.0f, 30.0f, 40.0f)))
+        assertEquals(13.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Vector3f(15, 15, 0)))
+        assertEquals(12.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Vector3f(15, 0, 15)))
+        assertEquals(11.0f, Boxi(11, 12, 13, 19, 18, 17).distanceFrom(Vector3f(0, 15, 15)))
 
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(0, 0, 0)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(0, 0, 9)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(0, 7, 0)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(0, 7, 9)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(5, 0, 0)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(5, 0, 9)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(5, 7, 0)), absoluteTolerance = 0.1f)
-        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(5, 7, 9)), absoluteTolerance = 0.1f)
-        assertEquals(46.01f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Point3f(50, 5, 5)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(0, 0, 0)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(0, 0, 9)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(0, 7, 0)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(0, 7, 9)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(5, 0, 0)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(5, 0, 9)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(5, 7, 0)), absoluteTolerance = 0.1f)
+        assertEquals(3.74f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(5, 7, 9)), absoluteTolerance = 0.1f)
+        assertEquals(46.01f, Boxi(1, 2, 3, 4, 5, 6).distanceFrom(Vector3f(50, 5, 5)), absoluteTolerance = 0.1f)
     }
 }

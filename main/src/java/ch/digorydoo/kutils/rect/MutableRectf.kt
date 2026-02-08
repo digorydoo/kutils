@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.rect
 
-import ch.digorydoo.kutils.point.Point2f
+import ch.digorydoo.kutils.vector.Vector2f
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableRectf(
@@ -34,7 +34,7 @@ class MutableRectf(
         return this
     }
 
-    fun set(origin: Point2f, size: Point2f): MutableRectf {
+    fun set(origin: Vector2f, size: Vector2f): MutableRectf {
         left = origin.x
         top = origin.y
         right = origin.x + size.x

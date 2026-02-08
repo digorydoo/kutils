@@ -2,12 +2,12 @@
 
 package ch.digorydoo.kutils.geometry
 
-import ch.digorydoo.kutils.point.Point2f
-import ch.digorydoo.kutils.point.Point3f
+import ch.digorydoo.kutils.vector.Vector2f
+import ch.digorydoo.kutils.vector.Vector3f
 
 private const val EPSILON = 0.0000001
 
-fun signedAreaOfTriangle(a: Point2f, b: Point2f, c: Point2f) =
+fun signedAreaOfTriangle(a: Vector2f, b: Vector2f, c: Vector2f) =
     signedAreaOfTriangle(a.x, a.y, b.x, b.y, c.x, c.y)
 
 fun signedAreaOfTriangle(ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float) =
@@ -29,11 +29,11 @@ class CheckRayIntersectionResult {
 
 // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
 fun checkRayIntersectsTriangle(
-    rayOrigin: Point3f,
-    rayDir: Point3f, // needs to be normalized
-    vertex0: Point3f,
-    vertex1: Point3f,
-    vertex2: Point3f,
+    rayOrigin: Vector3f,
+    rayDir: Vector3f, // needs to be normalized
+    vertex0: Vector3f,
+    vertex1: Vector3f,
+    vertex2: Vector3f,
     result: CheckRayIntersectionResult,
 ) {
     val edge1 = vertex1 - vertex0

@@ -2,16 +2,16 @@
 
 package ch.digorydoo.kutils.geometry
 
-import ch.digorydoo.kutils.point.MutablePoint2f
-import ch.digorydoo.kutils.point.Point2f
+import ch.digorydoo.kutils.vector.MutableVector2f
+import ch.digorydoo.kutils.vector.Vector2f
 
 // UNTESTED
 fun checkIntersection(
-    startOfLineA: Point2f,
-    endOfLineA: Point2f,
-    startOfLineB: Point2f,
-    endOfLineB: Point2f,
-    intersection: MutablePoint2f? = null,
+    startOfLineA: Vector2f,
+    endOfLineA: Vector2f,
+    startOfLineB: Vector2f,
+    endOfLineB: Vector2f,
+    intersection: MutableVector2f? = null,
 ) = checkIntersection(
     startOfLineA.x, startOfLineA.y, endOfLineA.x, endOfLineA.y,
     startOfLineB.x, startOfLineB.y, endOfLineB.x, endOfLineB.y,
@@ -28,7 +28,7 @@ fun checkIntersection(
     y3: Float,
     x4: Float,
     y4: Float,
-    intersection: MutablePoint2f? = null,
+    intersection: MutableVector2f? = null,
 ): Boolean {
     val ta = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
     val tb = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))

@@ -1,7 +1,7 @@
 package ch.digorydoo.kutils.file
 
-import ch.digorydoo.kutils.point.Point3f
 import ch.digorydoo.kutils.utils.newFloatBuffer
+import ch.digorydoo.kutils.vector.Vector3f
 import java.io.DataInputStream
 import java.nio.FloatBuffer
 
@@ -89,11 +89,11 @@ class KDataInputStream<M: KDataInputStream.FileMarker>(
         return ui != 0u
     }
 
-    fun readPoint3f(): Point3f {
+    fun readVector3f(): Vector3f {
         val x = input.readFloat()
         val y = input.readFloat()
         val z = input.readFloat()
-        return Point3f(x, y, z)
+        return Vector3f(x, y, z)
     }
 
     fun readFloat(): Float {

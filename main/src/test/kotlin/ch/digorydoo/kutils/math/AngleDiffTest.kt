@@ -47,7 +47,16 @@ internal class AngleDiffTest {
         assertEquals(-3.1031852f, angleDiff(22.0f, 25.18f), TOLERANCE, "(9)")
     }
 
+    @Test
+    fun `should correctly handle other edge cases`() {
+        assertEquals(-PI / 2, angleDiff(0.0, 3 * PI / 2), TOLERANCE_D, "(1)")
+        assertEquals(-PI / 2, angleDiff(0.0, 3 * PI / 2 + 2 * PI), TOLERANCE_D, "(2)")
+        assertEquals(PI / 2, angleDiff(0.0, -3 * PI / 2), TOLERANCE_D, "(3)")
+        assertEquals(PI / 2, angleDiff(0.0, -3 * PI / 2 - 2 * PI), TOLERANCE_D, "(4)")
+    }
+
     companion object {
         private const val TOLERANCE = 0.00001f
+        private const val TOLERANCE_D = 0.000001
     }
 }

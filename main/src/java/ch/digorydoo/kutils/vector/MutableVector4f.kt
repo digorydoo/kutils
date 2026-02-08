@@ -1,18 +1,18 @@
-package ch.digorydoo.kutils.point
+package ch.digorydoo.kutils.vector
 
 import ch.digorydoo.kutils.matrix.Matrix4f
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4f(theX, theY, theZ, theW) {
+class MutableVector4f(x: Float, y: Float, z: Float, w: Float): Vector4f(x, y, z, w) {
     constructor(): this(0.0f, 0.0f, 0.0f, 0.0f)
-    constructor(pt: Point4f): this(pt.x, pt.y, pt.z, pt.w)
+    constructor(vec: Vector4f): this(vec.x, vec.y, vec.z, vec.w)
 
-    override var x: Float = theX
-    override var y: Float = theY
-    override var z: Float = theZ
-    override var w: Float = theW
+    override var x: Float = x
+    override var y: Float = y
+    override var z: Float = z
+    override var w: Float = w
 
-    fun set(other: Point4f) {
+    fun set(other: Vector4f) {
         x = other.x
         y = other.y
         z = other.z
@@ -33,15 +33,15 @@ class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4
         w = theW.toFloat()
     }
 
-    fun setMultiplied(mat: Matrix4f, vec: Point4f) {
+    fun setMultiplied(mat: Matrix4f, vec: Vector4f) {
         mat.multiplyTo(vec, this)
     }
 
-    fun add(pt: Point4f) {
-        x += pt.x
-        y += pt.y
-        z += pt.z
-        w += pt.w
+    fun add(vec: Vector4f) {
+        x += vec.x
+        y += vec.y
+        z += vec.z
+        w += vec.w
     }
 
     fun add(theX: Float, theY: Float, theZ: Float, theW: Float) {
@@ -51,11 +51,11 @@ class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4
         w += theW
     }
 
-    fun subtract(pt: Point4f) {
-        x -= pt.x
-        y -= pt.y
-        z -= pt.z
-        w -= pt.w
+    fun subtract(vec: Vector4f) {
+        x -= vec.x
+        y -= vec.y
+        z -= vec.z
+        w -= vec.w
     }
 
     fun subtract(theX: Float, theY: Float, theZ: Float, theW: Float) {
@@ -79,33 +79,33 @@ class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4
         w *= factor
     }
 
-    fun scale(factor: Point4f) {
+    fun scale(factor: Vector4f) {
         x *= factor.x
         y *= factor.y
         z *= factor.z
         w *= factor.w
     }
 
-    override operator fun plus(other: Point4f) =
-        MutablePoint4f(x + other.x, y + other.y, z + other.z, w + other.w)
+    override operator fun plus(other: Vector4f) =
+        MutableVector4f(x + other.x, y + other.y, z + other.z, w + other.w)
 
-    override operator fun minus(other: Point4f) =
-        MutablePoint4f(x - other.x, y - other.y, z - other.z, w - other.w)
+    override operator fun minus(other: Vector4f) =
+        MutableVector4f(x - other.x, y - other.y, z - other.z, w - other.w)
 
     override operator fun times(factor: Float) =
-        MutablePoint4f(x * factor, y * factor, z * factor, w * factor)
+        MutableVector4f(x * factor, y * factor, z * factor, w * factor)
 
     override operator fun div(divisor: Float) =
-        MutablePoint4f(x / divisor, y / divisor, z / divisor, w / divisor)
+        MutableVector4f(x / divisor, y / divisor, z / divisor, w / divisor)
 
-    operator fun plusAssign(other: Point4f) {
+    operator fun plusAssign(other: Vector4f) {
         x += other.x
         y += other.y
         z += other.z
         w += other.w
     }
 
-    operator fun minusAssign(other: Point4f) {
+    operator fun minusAssign(other: Vector4f) {
         x -= other.x
         y -= other.y
         z -= other.z
@@ -127,5 +127,5 @@ class MutablePoint4f(theX: Float, theY: Float, theZ: Float, theW: Float): Point4
     }
 
     fun toImmutable() =
-        Point4f(x, y, z, w)
+        Vector4f(x, y, z, w)
 }

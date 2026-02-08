@@ -2,10 +2,10 @@
 
 package ch.digorydoo.kutils.math
 
-import ch.digorydoo.kutils.point.MutablePoint2f
-import ch.digorydoo.kutils.point.MutablePoint3f
-import ch.digorydoo.kutils.point.Point2f
-import ch.digorydoo.kutils.point.Point3f
+import ch.digorydoo.kutils.vector.MutableVector2f
+import ch.digorydoo.kutils.vector.MutableVector3f
+import ch.digorydoo.kutils.vector.Vector2f
+import ch.digorydoo.kutils.vector.Vector3f
 
 /**
  * Linear interpolation or extrapolation
@@ -30,14 +30,14 @@ fun lerp(from: Float, to: Float, rel: Float) =
 /**
  * Linear interpolation of points
  */
-fun lerp(from: Point2f, to: Point2f, rel: Float) =
-    MutablePoint2f(
+fun lerp(from: Vector2f, to: Vector2f, rel: Float) =
+    MutableVector2f(
         lerp(from.x, to.x, rel),
         lerp(from.y, to.y, rel),
     )
 
-fun lerp(from: Point3f, to: Point3f, rel: Float) =
-    MutablePoint3f(
+fun lerp(from: Vector3f, to: Vector3f, rel: Float) =
+    MutableVector3f(
         lerp(from.x, to.x, rel),
         lerp(from.y, to.y, rel),
         lerp(from.z, to.z, rel),

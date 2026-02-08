@@ -1,7 +1,5 @@
 package ch.digorydoo.kutils.matrix
 
-import ch.digorydoo.kutils.point.MutablePoint4f
-import ch.digorydoo.kutils.point.Point4f
 import ch.digorydoo.kutils.string.lpad
 import ch.digorydoo.kutils.string.toPrecision
 import ch.digorydoo.kutils.utils.forEachElement
@@ -9,6 +7,8 @@ import ch.digorydoo.kutils.utils.mapInplace
 import ch.digorydoo.kutils.utils.mapInplaceIndexed
 import ch.digorydoo.kutils.utils.newFloatBuffer
 import ch.digorydoo.kutils.utils.swap
+import ch.digorydoo.kutils.vector.MutableVector4f
+import ch.digorydoo.kutils.vector.Vector4f
 import java.nio.FloatBuffer
 import kotlin.math.max
 
@@ -59,11 +59,11 @@ open class Matrix4f protected constructor() {
     operator fun times(other: Matrix4f): MutableMatrix4f =
         newMultiplied(other)
 
-    operator fun times(pt: Point4f): MutablePoint4f =
-        MutablePoint4f().also { multiply(it, _buffer, pt) }
+    operator fun times(vec: Vector4f): MutableVector4f =
+        MutableVector4f().also { multiply(it, _buffer, vec) }
 
-    // Callers should prefer MutablePoint4f::setMultiplied
-    fun multiplyTo(src: Point4f, dst: MutablePoint4f) {
+    // Callers should prefer MutableVector4f::setMultiplied
+    fun multiplyTo(src: Vector4f, dst: MutableVector4f) {
         // src and dst may be the same instance
         multiply(dst, _buffer, src)
     }
@@ -215,7 +215,7 @@ open class Matrix4f protected constructor() {
             dst.put((a41 * b14) + (a42 * b24) + (a43 * b34) + (a44 * b44))
         }
 
-        fun multiply(dst: MutablePoint4f, mat: FloatBuffer, pt: Point4f) {
+        fun multiply(dst: MutableVector4f, mat: FloatBuffer, vec: Vector4f) {
             mat.position(0)
             val m11 = mat.get()
             val m21 = mat.get()
@@ -234,11 +234,11 @@ open class Matrix4f protected constructor() {
             val m34 = mat.get()
             val m44 = mat.get()
 
-            // Because pt and dst may be the same instance
-            val px = pt.x
-            val py = pt.y
-            val pz = pt.z
-            val pw = pt.w
+            // Because vec and dst may be the same instance
+            val px = vec.x
+            val py = vec.y
+            val pz = vec.z
+            val pw = vec.w
 
             dst.x = (m11 * px) + (m12 * py) + (m13 * pz) + (m14 * pw)
             dst.y = (m21 * px) + (m22 * py) + (m23 * pz) + (m24 * pw)

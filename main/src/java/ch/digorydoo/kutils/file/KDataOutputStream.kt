@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.file
 
-import ch.digorydoo.kutils.point.Point3f
+import ch.digorydoo.kutils.vector.Vector3f
 import java.io.DataOutputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -135,10 +135,10 @@ class KDataOutputStream<M: KDataInputStream.FileMarker>(private val output: Data
         output.writeFloat(f)
     }
 
-    fun write(pt: Point3f) {
-        output.writeFloat(pt.x)
-        output.writeFloat(pt.y)
-        output.writeFloat(pt.z)
+    fun write(vec: Vector3f) {
+        output.writeFloat(vec.x)
+        output.writeFloat(vec.y)
+        output.writeFloat(vec.z)
     }
 
     private fun writeUTF8(s: String) {

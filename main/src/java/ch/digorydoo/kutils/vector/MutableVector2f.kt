@@ -1,4 +1,4 @@
-package ch.digorydoo.kutils.point
+package ch.digorydoo.kutils.vector
 
 import ch.digorydoo.kutils.math.clamp
 import kotlin.math.cos
@@ -6,94 +6,94 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class MutablePoint2f(theX: Float, theY: Float): Point2f(theX, theY) {
+class MutableVector2f(x: Float, y: Float): Vector2f(x, y) {
     constructor(): this(0.0f, 0.0f)
     constructor(ix: Int, iy: Int): this(ix.toFloat(), iy.toFloat())
-    constructor(pt: Point2f): this(pt.x, pt.y)
+    constructor(vec: Vector2f): this(vec.x, vec.y)
 
-    override var x: Float = theX
-    override var y: Float = theY
+    override var x: Float = x
+    override var y: Float = y
 
-    fun set(other: Point2f): MutablePoint2f {
+    fun set(other: Vector2f): MutableVector2f {
         x = other.x
         y = other.y
         return this
     }
 
-    fun set(theX: Int, theY: Int): MutablePoint2f {
+    fun set(theX: Int, theY: Int): MutableVector2f {
         x = theX.toFloat()
         y = theY.toFloat()
         return this
     }
 
-    fun set(theX: Float, theY: Float): MutablePoint2f {
+    fun set(theX: Float, theY: Float): MutableVector2f {
         x = theX
         y = theY
         return this
     }
 
-    fun add(pt: Point2f): MutablePoint2f {
-        x += pt.x
-        y += pt.y
+    fun add(vec: Vector2f): MutableVector2f {
+        x += vec.x
+        y += vec.y
         return this
     }
 
-    fun add(theX: Float, theY: Float): MutablePoint2f {
+    fun add(theX: Float, theY: Float): MutableVector2f {
         x += theX
         y += theY
         return this
     }
 
-    fun subtract(pt: Point2f): MutablePoint2f {
-        x -= pt.x
-        y -= pt.y
+    fun subtract(vec: Vector2f): MutableVector2f {
+        x -= vec.x
+        y -= vec.y
         return this
     }
 
-    fun subtract(theX: Float, theY: Float): MutablePoint2f {
+    fun subtract(theX: Float, theY: Float): MutableVector2f {
         x -= theX
         y -= theY
         return this
     }
 
-    fun scale(byX: Float, byY: Float): MutablePoint2f {
+    fun scale(byX: Float, byY: Float): MutableVector2f {
         x *= byX
         y *= byY
         return this
     }
 
-    fun scale(factor: Float): MutablePoint2f {
+    fun scale(factor: Float): MutableVector2f {
         x *= factor
         y *= factor
         return this
     }
 
-    fun scale(factor: Point2f): MutablePoint2f {
+    fun scale(factor: Vector2f): MutableVector2f {
         x *= factor.x
         y *= factor.y
         return this
     }
 
-    override operator fun plus(other: Point2f) =
-        MutablePoint2f(x + other.x, y + other.y)
+    override operator fun plus(other: Vector2f) =
+        MutableVector2f(x + other.x, y + other.y)
 
-    override operator fun minus(other: Point2f) =
-        MutablePoint2f(x - other.x, y - other.y)
+    override operator fun minus(other: Vector2f) =
+        MutableVector2f(x - other.x, y - other.y)
 
     override operator fun times(factor: Float) =
-        MutablePoint2f(x * factor, y * factor)
+        MutableVector2f(x * factor, y * factor)
 
-    // operator fun times(factor: Point2f) dot product...
+    // operator fun times(factor: Vector2f) dot product...
 
     override operator fun div(divisor: Float) =
-        MutablePoint2f(x / divisor, y / divisor)
+        MutableVector2f(x / divisor, y / divisor)
 
-    operator fun plusAssign(other: Point2f) {
+    operator fun plusAssign(other: Vector2f) {
         x += other.x
         y += other.y
     }
 
-    operator fun minusAssign(other: Point2f) {
+    operator fun minusAssign(other: Vector2f) {
         x -= other.x
         y -= other.y
     }
@@ -108,7 +108,7 @@ class MutablePoint2f(theX: Float, theY: Float): Point2f(theX, theY) {
         y /= divisor
     }
 
-    fun clampTo(left: Float, top: Float, right: Float, bottom: Float): MutablePoint2f {
+    fun clampTo(left: Float, top: Float, right: Float, bottom: Float): MutableVector2f {
         x = clamp(x, left, right)
         y = clamp(y, top, bottom)
         return this
@@ -117,13 +117,13 @@ class MutablePoint2f(theX: Float, theY: Float): Point2f(theX, theY) {
     fun roundToGrid(xgrid: Int, ygrid: Int) =
         roundToGrid(xgrid.toFloat(), ygrid.toFloat())
 
-    fun roundToGrid(xgrid: Float, ygrid: Float): MutablePoint2f {
+    fun roundToGrid(xgrid: Float, ygrid: Float): MutableVector2f {
         x = (x / xgrid).roundToInt() * xgrid
         y = (y / ygrid).roundToInt() * ygrid
         return this
     }
 
-    fun normalize(): MutablePoint2f {
+    fun normalize(): MutableVector2f {
         val len = length()
 
         if (len > 0) {
@@ -140,7 +140,7 @@ class MutablePoint2f(theX: Float, theY: Float): Point2f(theX, theY) {
     fun rotate(alpha: Float) =
         rotate(alpha.toDouble())
 
-    fun rotate(alpha: Double): MutablePoint2f {
+    fun rotate(alpha: Double): MutableVector2f {
         val c = cos(alpha)
         val s = sin(alpha)
         val newX = x * c - y * s
@@ -151,6 +151,6 @@ class MutablePoint2f(theX: Float, theY: Float): Point2f(theX, theY) {
     }
 
     fun toImmutable() =
-        Point2f(x, y)
+        Vector2f(x, y)
 }
 

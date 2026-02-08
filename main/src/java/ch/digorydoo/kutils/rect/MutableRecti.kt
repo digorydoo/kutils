@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.rect
 
-import ch.digorydoo.kutils.point.Point2i
+import ch.digorydoo.kutils.vector.Vector2i
 
 @Suppress("unused")
 class MutableRecti(
@@ -34,7 +34,7 @@ class MutableRecti(
         return this
     }
 
-    fun set(origin: Point2i, size: Point2i): MutableRecti {
+    fun set(origin: Vector2i, size: Vector2i): MutableRecti {
         left = origin.x
         top = origin.y
         right = origin.x + size.x

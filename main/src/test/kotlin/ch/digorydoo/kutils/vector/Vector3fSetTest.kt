@@ -1,45 +1,45 @@
-package ch.digorydoo.kutils.point
+package ch.digorydoo.kutils.vector
 
 import kotlin.test.*
 
-internal class Point3fSetTest {
+internal class Vector3fSetTest {
     @Test
-    fun shouldCreateProperEmptySet() {
-        val set = Point3fSet()
+    fun `should create proper empty set`() {
+        val set = Vector3fSet()
         assertEquals(0, set.size)
         assertTrue(set.isEmpty())
         assertEquals(set.toString(), "{}")
     }
 
     @Test
-    fun shouldAddDistinctPoints() {
-        val set = Point3fSet()
+    fun `should add distinct vectors`() {
+        val set = Vector3fSet()
 
-        set.add(Point3f(3.5f, 5.9f, 1.1f))
+        set.add(Vector3f(3.5f, 5.9f, 1.1f))
         assertEquals(set.toString(), "{(3.5, 5.9, 1.1)}")
 
-        set.add(Point3f(5.9f, 3.5f, 1.1f))
+        set.add(Vector3f(5.9f, 3.5f, 1.1f))
         assertEquals(set.toString(), "{(3.5, 5.9, 1.1), (5.9, 3.5, 1.1)}")
 
-        set.add(Point3f(3.5f, 5.9f, 1.1f))
+        set.add(Vector3f(3.5f, 5.9f, 1.1f))
         assertEquals(set.toString(), "{(3.5, 5.9, 1.1), (5.9, 3.5, 1.1)}")
 
-        set.add(Point3f(5.9f, 3.5f, 1.1f))
+        set.add(Vector3f(5.9f, 3.5f, 1.1f))
         assertEquals(set.toString(), "{(3.5, 5.9, 1.1), (5.9, 3.5, 1.1)}")
 
-        set.add(Point3f(0.0f, 0.0f, 0.0f))
+        set.add(Vector3f(0.0f, 0.0f, 0.0f))
         assertEquals(set.toString(), "{(3.5, 5.9, 1.1), (5.9, 3.5, 1.1), (0.0, 0.0, 0.0)}")
     }
 
     @Test
-    fun shouldIterateOverDistinctMembers() {
+    fun `should iterate over distinct members`() {
         val arr = arrayOf(
-            Point3f(1.1f, 2.2f, 0.0f),
-            Point3f(3.3f, 4.2f, 1.0f),
-            Point3f(5.5f, 6.6f, 2.0f),
-            Point3f(3.3f, 4.2f, 1.0f),
+            Vector3f(1.1f, 2.2f, 0.0f),
+            Vector3f(3.3f, 4.2f, 1.0f),
+            Vector3f(5.5f, 6.6f, 2.0f),
+            Vector3f(3.3f, 4.2f, 1.0f),
         )
-        val set = Point3fSet()
+        val set = Vector3fSet()
         set.add(arr[0])
         set.add(arr[1])
         set.add(arr[2])
@@ -48,26 +48,26 @@ internal class Point3fSetTest {
         var count = 0
 
         set.forEach {
-            val pt = arr[count++]
-            assertTrue(pt.hasSameValues(it))
+            val vec = arr[count++]
+            assertTrue(vec.hasSameValues(it))
         }
 
-        assertEquals(count, 3) // because the fourth pt is not a distinct pt
+        assertEquals(count, 3) // because the fourth vec is not a distinct vec
     }
 
     @Test
-    fun shouldAddNewInstances() {
-        val set = Point3fSet()
+    fun `should add new instances`() {
+        val set = Vector3fSet()
 
-        val pt = Point3f(8.2f, 4.2f, 1.1f)
-        set.add(pt)
+        val vec = Vector3f(8.2f, 4.2f, 1.1f)
+        set.add(vec)
 
         var count = 0
 
         set.forEach {
-            assertNotSame(pt, it)
-            assertTrue(pt.hasSameValues(it))
-            assertTrue(it.hasSameValues(pt))
+            assertNotSame(vec, it)
+            assertTrue(vec.hasSameValues(it))
+            assertTrue(it.hasSameValues(vec))
             count++
         }
 
@@ -75,11 +75,11 @@ internal class Point3fSetTest {
     }
 
     @Test
-    fun shouldProperlyImplementClear() {
-        val set = Point3fSet()
-        set.add(Point3f(1.1f, 2.2f, 1.0f))
-        set.add(Point3f(3.3f, 4.2f, 2.0f))
-        set.add(Point3f(5.5f, 6.6f, 3.0f))
+    fun `should properly implement clear`() {
+        val set = Vector3fSet()
+        set.add(Vector3f(1.1f, 2.2f, 1.0f))
+        set.add(Vector3f(3.3f, 4.2f, 2.0f))
+        set.add(Vector3f(5.5f, 6.6f, 3.0f))
         assertEquals(set.size, 3)
         assertFalse(set.isEmpty())
         assertEquals(set.toString(), "{(1.1, 2.2, 1.0), (3.3, 4.2, 2.0), (5.5, 6.6, 3.0)}")
@@ -91,7 +91,7 @@ internal class Point3fSetTest {
     }
 
     @Test
-    fun shouldAddAllFromFloatArray() {
+    fun `should add all from FloatArray`() {
         val arr = floatArrayOf(
             1.1f, 2.2f, 9.0f,
             3.3f, 4.2f, 8.0f,
@@ -101,7 +101,7 @@ internal class Point3fSetTest {
             5.5f, 6.6f, 7.0f, // same!
         )
 
-        val set = Point3fSet()
+        val set = Vector3fSet()
         set.addAll(arr)
         assertEquals(set.size, 4)
         assertFalse(set.isEmpty())
@@ -109,16 +109,16 @@ internal class Point3fSetTest {
 
         assertFails {
             // This should fail, because the number of floats is not a multiple of 3
-            Point3fSet().addAll(floatArrayOf(1.1f, 2.2f, 3.3f, 4.2f))
+            Vector3fSet().addAll(floatArrayOf(1.1f, 2.2f, 3.3f, 4.2f))
         }
     }
 
     @Test
-    fun shouldFindAllIndices() {
-        val set = Point3fSet().apply {
-            add(Point3f(1.1f, 5.0f, 6.0f))
-            add(Point3f(2.2f, 4.2f, 7.0f))
-            add(Point3f(3.3f, 3.9f, 8.0f))
+    fun `should find all indices`() {
+        val set = Vector3fSet().apply {
+            add(Vector3f(1.1f, 5.0f, 6.0f))
+            add(Vector3f(2.2f, 4.2f, 7.0f))
+            add(Vector3f(3.3f, 3.9f, 8.0f))
         }
 
         val l0 = set.findIndices(floatArrayOf())
@@ -152,26 +152,26 @@ internal class Point3fSetTest {
     }
 
     @Test
-    fun shouldConvertToMutableList() {
-        val set = Point3fSet().apply {
-            add(Point3f(1.1f, 5.0f, 1.0f))
-            add(Point3f(2.2f, 4.2f, 2.0f))
-            add(Point3f(3.3f, 3.9f, 3.0f))
-            add(Point3f(1.1f, 5.0f, 1.0f))
+    fun `should convert to MutableList`() {
+        val set = Vector3fSet().apply {
+            add(Vector3f(1.1f, 5.0f, 1.0f))
+            add(Vector3f(2.2f, 4.2f, 2.0f))
+            add(Vector3f(3.3f, 3.9f, 3.0f))
+            add(Vector3f(1.1f, 5.0f, 1.0f))
         }
         val list = set.toMutableList()
-        assertIs<MutableList<Point3f>>(list)
+        assertIs<MutableList<Vector3f>>(list)
         assertEquals(list.size, 3)
         assertEquals(list.joinToString(", "), "(1.1, 5.0, 1.0), (2.2, 4.2, 2.0), (3.3, 3.9, 3.0)")
     }
 
     @Test
-    fun shouldConvertToFloatArray() {
-        val set = Point3fSet().apply {
-            add(Point3f(1.1f, 5.0f, 9.0f))
-            add(Point3f(2.2f, 4.2f, 8.0f))
-            add(Point3f(3.3f, 3.9f, 7.0f))
-            add(Point3f(1.1f, 5.0f, 9.0f))
+    fun `should convert to FloatArray`() {
+        val set = Vector3fSet().apply {
+            add(Vector3f(1.1f, 5.0f, 9.0f))
+            add(Vector3f(2.2f, 4.2f, 8.0f))
+            add(Vector3f(3.3f, 3.9f, 7.0f))
+            add(Vector3f(1.1f, 5.0f, 9.0f))
         }
         val arr = set.toFloatArray()
         assertIs<FloatArray>(arr)

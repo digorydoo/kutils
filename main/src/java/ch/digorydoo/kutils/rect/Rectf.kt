@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.rect
 
-import ch.digorydoo.kutils.point.Point2f
+import ch.digorydoo.kutils.vector.Vector2f
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Rectf(
@@ -13,8 +13,8 @@ open class Rectf(
     constructor(l: Int, t: Int, r: Int, b: Int): this(l.toFloat(), t.toFloat(), r.toFloat(), b.toFloat())
     constructor(r: Rectf): this(r.left, r.top, r.right, r.bottom)
 
-    val origin: Point2f
-        get() = Point2f(left, top)
+    val origin: Vector2f
+        get() = Vector2f(left, top)
 
     val width: Float
         get() = right - left
@@ -22,11 +22,11 @@ open class Rectf(
     val height: Float
         get() = bottom - top
 
-    val size: Point2f
-        get() = Point2f(width, height)
+    val size: Vector2f
+        get() = Vector2f(width, height)
 
     fun centre() =
-        Point2f(
+        Vector2f(
             (left + right) / 2.0f,
             (top + bottom) / 2.0f
         )
@@ -34,8 +34,8 @@ open class Rectf(
     fun hasSameValues(other: Rectf) =
         left == other.left && top == other.top && right == other.right && bottom == other.bottom
 
-    fun contains(pt: Point2f) =
-        pt.x >= left && pt.x < right && pt.y >= top && pt.y < bottom
+    fun contains(vec: Vector2f) =
+        vec.x >= left && vec.x < right && vec.y >= top && vec.y < bottom
 
     fun overlaps(r: Rectf) =
         (left >= r.left || right > r.left) &&

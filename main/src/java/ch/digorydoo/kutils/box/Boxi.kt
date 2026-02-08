@@ -2,9 +2,9 @@
 
 package ch.digorydoo.kutils.box
 
-import ch.digorydoo.kutils.point.MutablePoint3f
-import ch.digorydoo.kutils.point.Point3f
-import ch.digorydoo.kutils.point.Point3i
+import ch.digorydoo.kutils.vector.MutableVector3f
+import ch.digorydoo.kutils.vector.Vector3f
+import ch.digorydoo.kutils.vector.Vector3i
 import kotlin.math.max
 
 open class Boxi(
@@ -27,14 +27,14 @@ open class Boxi(
     val zsize get() = z1 - z0
 
     fun centre() =
-        Point3f(
+        Vector3f(
             (x0 + x1) / 2.0f,
             (y0 + y1) / 2.0f,
             (z0 + z1) / 2.0f,
         )
 
     fun centrei() =
-        Point3i(
+        Vector3i(
             ((x0 + x1) / 2.0f).toInt(),
             ((y0 + y1) / 2.0f).toInt(),
             ((z0 + z1) / 2.0f).toInt(),
@@ -44,10 +44,10 @@ open class Boxi(
         x0 == other.x0 && y0 == other.y0 && z0 == other.z0 &&
             x1 == other.x1 && y1 == other.y1 && z1 == other.z1
 
-    fun contains(pt: Point3f) =
-        pt.x >= x0 && pt.x < x1 &&
-            pt.y >= y0 && pt.y < y1 &&
-            pt.z >= z0 && pt.z < z1
+    fun contains(vec: Vector3f) =
+        vec.x >= x0 && vec.x < x1 &&
+            vec.y >= y0 && vec.y < y1 &&
+            vec.z >= z0 && vec.z < z1
 
     fun overlaps(r: Boxi) =
         (x0 >= r.x0 || x1 > r.x0) &&
@@ -57,41 +57,41 @@ open class Boxi(
             (z0 >= r.z0 || z1 > r.z0) &&
             (z0 < r.z1 || z1 < r.z1)
 
-    fun distanceFrom(pt: Point3f): Float {
-        val xinside = pt.x >= x0 && pt.x < x1
-        val yinside = pt.y >= y0 && pt.y < y1
-        val zinside = pt.z >= z0 && pt.z < z1
+    fun distanceFrom(vec: Vector3f): Float {
+        val xinside = vec.x >= x0 && vec.x < x1
+        val yinside = vec.y >= y0 && vec.y < y1
+        val zinside = vec.z >= z0 && vec.z < z1
 
         if (xinside && yinside && zinside) return 0.0f
 
         if (xinside && yinside) {
-            val zout1 = z0 - pt.z
-            val zout2 = pt.z - z1
+            val zout1 = z0 - vec.z
+            val zout2 = vec.z - z1
             return max(zout1, zout2)
         }
 
         if (xinside && zinside) {
-            val yout1 = y0 - pt.y
-            val yout2 = pt.y - y1
+            val yout1 = y0 - vec.y
+            val yout2 = vec.y - y1
             return max(yout1, yout2)
         }
 
         if (yinside && zinside) {
-            val xout1 = x0 - pt.x
-            val xout2 = pt.x - x1
+            val xout1 = x0 - vec.x
+            val xout2 = vec.x - x1
             return max(xout1, xout2)
         }
 
-        val tmp = MutablePoint3f()
+        val tmp = MutableVector3f()
         val darr = arrayOf(
-            tmp.set(x0, y0, z0).distanceTo(pt),
-            tmp.set(x0, y0, z1).distanceTo(pt),
-            tmp.set(x0, y1, z0).distanceTo(pt),
-            tmp.set(x0, y1, z1).distanceTo(pt),
-            tmp.set(x1, y0, z0).distanceTo(pt),
-            tmp.set(x1, y0, z1).distanceTo(pt),
-            tmp.set(x1, y1, z0).distanceTo(pt),
-            tmp.set(x1, y1, z1).distanceTo(pt),
+            tmp.set(x0, y0, z0).distanceTo(vec),
+            tmp.set(x0, y0, z1).distanceTo(vec),
+            tmp.set(x0, y1, z0).distanceTo(vec),
+            tmp.set(x0, y1, z1).distanceTo(vec),
+            tmp.set(x1, y0, z0).distanceTo(vec),
+            tmp.set(x1, y0, z1).distanceTo(vec),
+            tmp.set(x1, y1, z0).distanceTo(vec),
+            tmp.set(x1, y1, z1).distanceTo(vec),
         )
         return (darr.minOrNull() ?: 0.0).toFloat()
     }
