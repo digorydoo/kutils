@@ -110,6 +110,7 @@ class RomajiBuilder {
             .replace("kunhanemu", "kun wa nemu")
             .replace("machiheno", "machi e no")
             .replace("shiroheno", "shiro e no")
+            .replace("tōkuhe", "tōku e")
             .replace("hai kenai", "wa ikenai")
             .replace("hai masen", "wa imasen")
             .replace("hai tsumo", "wa itsumo")
@@ -145,6 +146,7 @@ class RomajiBuilder {
             .replace("sonōkane", "sono o-kane")
             .replace("kurōma", "kurouma")
             .replace("shirōma", "shirouma")
+            .replace("sunārashi", "suna arashi")
     }
 
     /**
