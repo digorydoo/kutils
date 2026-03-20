@@ -1,7 +1,6 @@
 package ch.digorydoo.kutils.cjk
 
-// @returns false for hiragana and katakana!
-fun Char.isCJK() =
+fun Char.isCJKNotKana() =
     this in Unicode.CJK_RADICALS ||
         this in Unicode.CJK_SYMBOLS ||
         this in Unicode.CJK_STROKES ||
@@ -12,6 +11,9 @@ fun Char.isCJK() =
         this in Unicode.CJK_COMPAT_FORMS ||
         this in Unicode.CJK_IDEOGRAPHS_EXT_A
 
+fun Char.isCJKOrKana() =
+    isCJKNotKana() || isKana()
+
 fun Char.isHiragana() =
     this in Unicode.HIRAGANA.range
 
@@ -20,9 +22,6 @@ fun Char.isKatakana() =
 
 fun Char.isKana() =
     isHiragana() || isKatakana()
-
-fun Char.isCJKOrKana() =
-    isCJK() || isKana()
 
 fun Char.isOneStrokeKanji() =
     this in Unicode.ONE_STROKE_KANJI
@@ -51,9 +50,11 @@ fun Char.toKatakana() =
         else -> this
     }
 
-// @returns false for hiragana and katakana!
-fun CharSequence.isCJK() =
-    all { it.isCJK() }
+fun CharSequence.isCJKNotKana() =
+    all { it.isCJKNotKana() }
+
+fun CharSequence.isCJKOrKana() =
+    all { it.isCJKOrKana() }
 
 fun CharSequence.isHiragana() =
     all { it.isHiragana() }
@@ -64,18 +65,17 @@ fun CharSequence.isKatakana() =
 fun CharSequence.isKana() =
     all { it.isKana() }
 
-fun CharSequence.isCJKOrKana() =
-    all { it.isCJKOrKana() }
-
 fun CharSequence.isPunctuation() =
     all { it.isPunctuation() }
 
 fun CharSequence.isBracket() =
     all { it.isBracket() }
 
-// @returns false for hiragana and katakana!
-fun CharSequence.hasCJK() =
-    any { it.isCJK() }
+fun CharSequence.hasCJKIgnoringKana() =
+    any { it.isCJKNotKana() }
+
+fun CharSequence.hasCJKOrKana() =
+    any { it.isCJKOrKana() }
 
 fun CharSequence.hasHiragana() =
     any { it.isHiragana() }
@@ -85,9 +85,6 @@ fun CharSequence.hasKatakana() =
 
 fun CharSequence.hasKana() =
     any { it.isKana() }
-
-fun CharSequence.hasCJKOrKana() =
-    any { it.isCJKOrKana() }
 
 fun CharSequence.hasPunctuation() =
     any { it.isPunctuation() }

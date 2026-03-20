@@ -8,24 +8,30 @@ import kotlin.test.assertTrue
 internal class CJKUtilsTest {
     @Test
     fun shouldRecognizeCJKChars() {
-        assertTrue("子供".isCJK())
-        assertTrue("割引".hasCJK())
-        assertTrue("々〜".isCJK())
+        assertTrue("子供".isCJKNotKana())
+        assertTrue("々〜".isCJKNotKana())
+        assertFalse("広さ".isCJKNotKana())
+        assertFalse("子供x".isCJKNotKana())
+        assertFalse("abcd".isCJKNotKana())
+        assertFalse("ABCD".isCJKNotKana())
+        assertFalse("1234".isCJKNotKana())
+        assertFalse("あいうえお".isCJKNotKana())
+        assertFalse("アイウエオ".isCJKNotKana())
+        assertFalse("がぎぐげご".isCJKNotKana())
+        assertFalse("ガギグゲゴ".isCJKNotKana())
+        assertFalse("ぁぃぅぇぉ".isCJKNotKana())
+        assertFalse("ァィゥェォ".isCJKNotKana())
+        assertFalse("１２３４５".isCJKNotKana())
 
-        assertFalse("子供x".isCJK())
-        assertTrue("子供x".hasCJK())
+        assertTrue("好き".isCJKOrKana())
+        assertTrue("私".isCJKOrKana())
+        assertTrue("そう".isCJKOrKana())
+        assertFalse("4個".isCJKOrKana())
 
-        assertFalse("abcd".isCJK())
-        assertFalse("abcd".hasCJK())
-        assertFalse("ABCD".isCJK())
-        assertFalse("1234".isCJK())
-        assertFalse("あいうえお".isCJK())
-        assertFalse("アイウエオ".isCJK())
-        assertFalse("がぎぐげご".isCJK())
-        assertFalse("ガギグゲゴ".isCJK())
-        assertFalse("ぁぃぅぇぉ".isCJK())
-        assertFalse("ァィゥェォ".isCJK())
-        assertFalse("１２３４５".isCJK())
+        assertTrue("割引".hasCJKIgnoringKana())
+        assertTrue("多くの".hasCJKIgnoringKana())
+        assertTrue("子供x".hasCJKIgnoringKana())
+        assertFalse("abcd".hasCJKIgnoringKana())
     }
 
     @Test
@@ -58,6 +64,13 @@ internal class CJKUtilsTest {
         assertFalse('A'.isKatakana())
         assertFalse('々'.isKatakana())
         assertFalse('２'.isKatakana())
+    }
+
+    @Test
+    fun shouldRecognizeAnyKana() {
+        assertTrue("りゅうぐう".hasKana())
+        assertTrue("テニス".hasKana())
+        assertTrue("飛び出す".hasKana())
     }
 
     @Test
