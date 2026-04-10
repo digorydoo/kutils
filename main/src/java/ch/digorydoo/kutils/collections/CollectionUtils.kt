@@ -1,5 +1,7 @@
 package ch.digorydoo.kutils.collections
 
+import kotlin.random.Random
+
 fun <T, N: Number> Collection<T>.averageOrNull(lambda: (t: T) -> N): Float? =
     takeIf { isNotEmpty() }
         ?.fold(0.0f) { result, t -> result + lambda(t).toFloat() }
@@ -20,4 +22,32 @@ fun <T> Collection<T>.weightedAverageOrNull(lambda: (index: Int, t: T) -> ValueA
     }
 
     return weightedSum / sumOfWeights
+}
+
+/**
+ * @return A random subset of the given collection with the desired count
+ */
+fun getRandomSubset(
+    chars: Collection<Char>,
+    desiredCount: Int,
+    except: Set<Char>,
+    ignoreCase: Boolean = false,
+): Set<Char> {
+    val result = chars
+        .filterNot { c ->
+            if (ignoreCase) {
+                val lc = c.lowercaseChar()
+                except.any { it.lowercaseChar() == lc }
+            } else {
+                except.contains(c)
+            }
+        }
+        .toMutableSet()
+
+    while (result.size > desiredCount) {
+        val idx = Random.nextInt(0, result.size)
+        result.remove(result.elementAt(idx))
+    }
+
+    return result
 }
