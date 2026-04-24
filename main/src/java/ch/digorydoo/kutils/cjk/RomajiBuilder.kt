@@ -148,6 +148,7 @@ class RomajiBuilder {
             .replace("shirōma", "shirouma")
             .replace("sunārashi", "suna arashi")
             .replace("mondaiheno", "mondai e no")
+            .replace("chatōkashi", "cha to o-kashi")
     }
 
     /**
