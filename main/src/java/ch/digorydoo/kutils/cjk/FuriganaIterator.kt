@@ -3,6 +3,9 @@
 package ch.digorydoo.kutils.cjk
 
 public class FuriganaIterator(private val text: CharSequence): Iterator<FuriganaIterator.Range> {
+    class MalformedFuriganaException(part: CharSequence, cause: Throwable? = null):
+        Exception("Malformed furigana: $part", cause)
+
     class Range(val range: IntRange, val primaryText: CharSequence, val secondaryText: CharSequence)
 
     private var index = 0
@@ -52,6 +55,15 @@ public class FuriganaIterator(private val text: CharSequence): Iterator<Furigana
 
         val primary = text.slice(startAt + 1 ..< sepAt)
         val secondary = text.slice(sepAt + 1 ..< endAt)
+
+        if (primary.contains(FURIGANA_START) || primary.contains(FURIGANA_END)) {
+            throw MalformedFuriganaException(primary)
+        }
+
+        if (secondary.contains(FURIGANA_START) || secondary.contains(FURIGANA_END)) {
+            throw MalformedFuriganaException(secondary)
+        }
+
         current = Range(startAt .. endAt, primary, secondary)
     }
 
