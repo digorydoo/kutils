@@ -5,6 +5,7 @@ package ch.digorydoo.kutils.cjk
 object Unicode {
     const val NULL_VALUE = '\u0000'
     const val ESCAPE = '\u001b'
+    const val NORMAL_WIDTH_SPACE = '\u0020'
     const val MIDDLE_DOT = '\u00b7'           // ·
     const val EN_SPACE = '\u2002'
     const val EM_SPACE = '\u2003'
@@ -21,6 +22,7 @@ object Unicode {
     const val ARROWHEAD_UP = '\u2303'         // ⌃
     const val ARROWHEAD_DOWN = '\u2304'       // ⌄
     const val CHECK_MARK = '\u2713'           // ✓
+    const val WIDE_WIDTH_SPACE = '\u3000'
     const val MODIFIER_ARROW_UP = '\ua71b'    // ꜛ
     const val MODIFIER_ARROW_DOWN = '\ua71c'  // ꜜ
     const val BLACK_RIGHT_FINGER = '\u261b'   // ☛

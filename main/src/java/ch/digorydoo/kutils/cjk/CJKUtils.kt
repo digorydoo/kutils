@@ -18,7 +18,7 @@ fun Char.isHiragana() =
     this in Unicode.HIRAGANA.range
 
 fun Char.isKatakana() =
-    this in Unicode.KATAKANA.range || this in Unicode.KATAKANA.phoneticsRange
+    (this in Unicode.KATAKANA.range && this != '・') || this in Unicode.KATAKANA.phoneticsRange
 
 fun Char.isKana() =
     isHiragana() || isKatakana()
@@ -104,3 +104,19 @@ fun CharSequence.toKatakana() =
     fold("") { result, c ->
         result + c.toKatakana()
     }
+
+fun isSameDigit(a: Char, b: Char): Boolean {
+    val na = when {
+        a >= '0' && a <= '9' -> a.code - '0'.code
+        a >= '０' && a <= '９' -> a.code - '０'.code
+        else -> return false
+    }
+
+    val nb = when {
+        b >= '0' && b <= '9' -> b.code - '0'.code
+        b >= '０' && b <= '９' -> b.code - '０'.code
+        else -> return false
+    }
+
+    return na == nb
+}

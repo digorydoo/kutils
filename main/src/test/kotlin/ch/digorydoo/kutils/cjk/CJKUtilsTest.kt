@@ -68,6 +68,24 @@ internal class CJKUtilsTest {
 
     @Test
     fun shouldRecognizeAnyKana() {
+        assertTrue('あ'.isKana())
+        assertTrue('ア'.isKana())
+        assertTrue('ゅ'.isKana())
+        assertTrue('ュ'.isKana())
+
+        assertTrue("いい".isKana())
+        assertTrue("イイ".isKana())
+        assertTrue("にゃ".isKana())
+        assertTrue("ニャ".isKana())
+
+        assertFalse('a'.isKana())
+        assertFalse('私'.isKana())
+        assertFalse('？'.isKana())
+        assertFalse('０'.isKana())
+
+        assertFalse("あ・いうえお".isKana())
+        assertFalse("私は".isKana())
+
         assertTrue("りゅうぐう".hasKana())
         assertTrue("テニス".hasKana())
         assertTrue("飛び出す".hasKana())
