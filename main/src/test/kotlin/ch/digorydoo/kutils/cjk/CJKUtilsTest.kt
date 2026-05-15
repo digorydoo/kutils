@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 
 internal class CJKUtilsTest {
     @Test
-    fun shouldRecognizeCJKChars() {
+    fun `should recognize cjk chars`() {
         assertTrue("子供".isCJKNotKana())
         assertTrue("々〜".isCJKNotKana())
         assertFalse("広さ".isCJKNotKana())
@@ -35,7 +35,7 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeHiragana() {
+    fun `should recognize hiragana`() {
         assertTrue('か'.isHiragana())
         assertTrue('が'.isHiragana())
         assertTrue('ぁ'.isHiragana())
@@ -51,7 +51,7 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeKatakana() {
+    fun `should recognize katakana`() {
         assertTrue('カ'.isKatakana())
         assertTrue('ガ'.isKatakana())
         assertTrue('ァ'.isKatakana())
@@ -67,7 +67,7 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeAnyKana() {
+    fun `should recognize any kana`() {
         assertTrue('あ'.isKana())
         assertTrue('ア'.isKana())
         assertTrue('ゅ'.isKana())
@@ -92,7 +92,7 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeSmallKana() {
+    fun `should recognize small kana`() {
         assertTrue('ぁ'.isSmallKana())
         assertFalse("aぁ".isSmallKana())
 
@@ -105,19 +105,19 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeOneStrokeKanji() {
+    fun `should recognize one-stroke kanji`() {
         assertTrue('一'.isOneStrokeKanji())
         assertFalse('人'.isOneStrokeKanji())
     }
 
     @Test
-    fun shouldRecognizeTwoStrokeKanji() {
+    fun `should recognize two-stroke kanji`() {
         assertTrue('了'.isTwoStrokeKanji())
         assertFalse('乙'.isTwoStrokeKanji())
     }
 
     @Test
-    fun shouldRecognizePunctuation() {
+    fun `should recognize punctuation`() {
         assertTrue("。、：；？！".isPunctuation())
         assertTrue(".,:;?!".isPunctuation())
 
@@ -133,7 +133,7 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldRecognizeBrackets() {
+    fun `should recognize brackets`() {
         assertTrue("(){}[]【】〔〕".isBracket())
         assertFalse("「」".isBracket())
 
@@ -142,14 +142,37 @@ internal class CJKUtilsTest {
     }
 
     @Test
-    fun shouldCorrectlyConvertToHiragana() {
+    fun `shoud correctly convert to hiragana`() {
         assertEquals("アァカハンヲヴッ".toHiragana(), "あぁかはんをゔっ")
         assertEquals("オ1xお１何イ".toHiragana(), "お1xお１何い")
     }
 
     @Test
-    fun shouldCorrectlyConvertToKatakana() {
+    fun `should correctly convert to katakana`() {
         assertEquals("あぁかはんをゔっ".toKatakana(), "アァカハンヲヴッ")
         assertEquals("お1xオ１何い".toKatakana(), "オ1xオ１何イ")
+    }
+
+    @Test
+    fun `should recognize when digits are the same`() {
+        // normal width vs. normal width
+        assertTrue(isSameDigit('1', '1'), "@1")
+        assertTrue(isSameDigit('9', '9'), "@2")
+        assertFalse(isSameDigit('1', '9'), "@3")
+
+        // wide width vs. wide width
+        assertTrue(isSameDigit('１', '１'), "@4")
+        assertTrue(isSameDigit('９', '９'), "@5")
+        assertFalse(isSameDigit('１', '９'), "@6")
+
+        // normal width vs. wide width
+        assertTrue(isSameDigit('1', '１'), "@7")
+        assertTrue(isSameDigit('9', '９'), "@8")
+        assertFalse(isSameDigit('1', '９'), "@9")
+
+        // wide width vs. normal width
+        assertTrue(isSameDigit('１', '1'), "@10")
+        assertTrue(isSameDigit('９', '9'), "@11")
+        assertFalse(isSameDigit('１', '9'), "@12")
     }
 }

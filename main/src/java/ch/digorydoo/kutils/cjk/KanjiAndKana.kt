@@ -11,3 +11,6 @@ class KanjiAndKana(val kanji: String, val kana: String): KanjiAndKanaBase() {
     operator fun component2() = kana
     override fun toString() = "【$kanji：$kana】"
 }
+
+fun List<KanjiAndKanaBase>.toCombinedString() =
+    joinToString("") { it.toString() }

@@ -4,7 +4,7 @@ package ch.digorydoo.kutils.file
 
 import ch.digorydoo.kutils.json.jsonDecode
 import ch.digorydoo.kutils.json.jsonEncode
-import ch.digorydoo.kutils.json.toJSON
+import ch.digorydoo.kutils.json.stringify
 import java.io.File
 
 /**
@@ -108,11 +108,11 @@ fun grepJson(
     warn: (msg: String, idx: Int) -> Boolean,
     handleMatch: (key: String, value: String, idx: Int) -> Boolean,
 ) {
-    // If matchWholeEntriesOnly is true, use toJSON() to put double quotes around the needle.
+    // If matchWholeEntriesOnly is true, use stringify() to put double quotes around the needle.
     // If matchWholeEntriesOnly is false, use jsonEncode() to encode any special characters inside the needle.
 
     val n = needle
-        .let { if (matchWholeEntriesOnly) it.toJSON() else jsonEncode(needle) }
+        .let { if (matchWholeEntriesOnly) stringify(it) else jsonEncode(needle) }
         .let { if (caseInsensitive) it.lowercase() else it }
 
     val checkMatch = { line: String, idx: Int ->

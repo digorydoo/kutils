@@ -40,7 +40,7 @@ class FuriganaAligner {
         val solved = align(p, 0, s, 0) ?: return null
 
         // Verify correctness, and also remove the ZERO_WIDTH_SPACE we've introduced
-        return solved.map { part ->
+        return solved.mapNotNull { part ->
             when (part) {
                 is KanjiAndKana -> {
                     if (part.kanji.isEmpty()) error("kanji is empty!")
@@ -55,8 +55,8 @@ class FuriganaAligner {
                     KanjiAndKana(removeSpaces(part.kanji), removeSpaces(part.kana))
                 }
                 is OkuriganaOrLiteral -> {
-                    if (part.span.isEmpty()) error("Empty okurigana span in furigana!")
-                    part
+                    val cleanSpan = removeSpaces(part.span)
+                    if (cleanSpan.isEmpty()) null else OkuriganaOrLiteral(cleanSpan)
                 }
             }
         }
@@ -76,8 +76,10 @@ class FuriganaAligner {
         }
 
         val pc = primary[pi]
+        val sc = secondary[si]
+        val digitAndSame = isSameDigit(pc, sc)
 
-        if (canHaveFurigana(pc)) {
+        if (!digitAndSame && canHaveFurigana(pc)) {
             var kanjiEnd = pi + 1
 
             while (kanjiEnd < primary.length && canHaveFurigana(primary[kanjiEnd])) {
@@ -103,12 +105,10 @@ class FuriganaAligner {
             }
         }
 
-        val sc = secondary[si]
-
         if (
             pc == sc ||
             pc.toHiragana() == sc ||
-            isSameDigit(pc, sc) ||
+            digitAndSame ||
             ((pc == '～' || pc == '〜') && sc == '~')
         ) {
             // Part with no furigana or suppressed furigana, i.e. kana-only word, okurigana, punctuation, etc.
@@ -173,11 +173,13 @@ class FuriganaAligner {
             KanjiAndKana("半分", "はんぶん"),
             KanjiAndKana("古い", "ふるい"),
             KanjiAndKana("壁掛け", "かべかけ"),
+            KanjiAndKana("女性が", "じょせいが"),
             KanjiAndKana("女性は", "じょせいは"),
             KanjiAndKana("小説は", "しょうせつは"),
             KanjiAndKana("弱い", "よわい"),
             KanjiAndKana("強い", "つよい"),
             KanjiAndKana("彼は", "かれは"),
+            KanjiAndKana("怖い", "こわい"),
             KanjiAndKana("担当医と", "たんとういと"),
             KanjiAndKana("時計は", "とけいは"),
             KanjiAndKana("毎日", "まいにち"),
