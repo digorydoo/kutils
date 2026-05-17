@@ -54,24 +54,26 @@ enum class JLPTLevel {
             else -> null
         }
 
-        fun Int.toJLPTLevelOrNull() =
-            fromIntOrNull(this)
-
         fun fromInt(i: Int) =
             fromIntOrNull(i) ?: throw Exception("Illegal JLPTLevel int value: $i")
 
-        fun fromString(s: String): JLPTLevel? = when (s) {
-            "n5" -> N5
-            "n4" -> N4
-            "n3" -> N3
-            "n2" -> N2
-            "n1" -> N1
-            "-" -> Nx
-            "" -> null
-            else -> throw Exception("Illegal JLPTLevel value: $s")
-        }
+        fun Int.toJLPTLevelOrNull() =
+            fromIntOrNull(this)
 
-        fun fromStringNotNull(s: String): JLPTLevel =
-            fromString(s) ?: throw Exception("JLPT level cannot be null here!")
+        fun fromStringOrNull(s: String, nxIsNull: Boolean = false, throwWhenInvalid: Boolean = true): JLPTLevel? =
+            when (s) {
+                "n5" -> N5
+                "n4" -> N4
+                "n3" -> N3
+                "n2" -> N2
+                "n1" -> N1
+                "nx" -> if (nxIsNull) null else Nx
+                "-" -> if (nxIsNull) null else Nx
+                "" -> null
+                else -> if (!throwWhenInvalid) null else throw Exception("Illegal JLPTLevel: $s")
+            }
+
+        fun fromString(s: String): JLPTLevel =
+            fromStringOrNull(s, nxIsNull = false, throwWhenInvalid = true) ?: throw Exception("Illegal JLPTLevel: $s")
     }
 }
