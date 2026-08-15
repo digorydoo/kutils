@@ -2,6 +2,9 @@
 
 package ch.digorydoo.kutils.math
 
+// Kotlin has x.coerceIn(min, max), which will throw if min > max.
+// These clamp function won't throw, but will force the value to the opposite boundary.
+
 /**
  * @param x: The value to be clamped
  * @param min: Minimum value

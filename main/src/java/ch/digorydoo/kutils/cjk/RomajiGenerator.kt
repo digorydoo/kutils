@@ -1,7 +1,7 @@
 package ch.digorydoo.kutils.cjk
 
-class RomajiBuilder {
-    fun build(textWithFurigana: CharSequence): String {
+class RomajiGenerator {
+    fun generate(textWithFurigana: CharSequence): String {
         var result = ""
         var incompleteKanji = ""
         var incompleteKana = ""
@@ -52,7 +52,6 @@ class RomajiBuilder {
                         .joinToString(" ")
 
                     // Prepare for the next round.
-                    @Suppress("AssignedValueIsNeverRead") // suppress incorrect warning
                     addSpaceNext = part.endsWith("を")
                     incompleteKanji = ""
                     incompleteKana = ""
@@ -61,7 +60,7 @@ class RomajiBuilder {
         )
 
         if (incompleteKana.endsWith("っ")) {
-            // We can't render a small tsu at the end of a phrase.
+            // A small tsu at the end of a phrase cannot be expressed in rōmaji.
             incompleteKana = incompleteKana.take(incompleteKana.length - 1)
         }
 
@@ -149,6 +148,7 @@ class RomajiBuilder {
             .replace("sunārashi", "suna arashi")
             .replace("mondaiheno", "mondai e no")
             .replace("chatōkashi", "cha to o-kashi")
+            .replace("seikōheno", "seikō e no")
     }
 
     /**
@@ -311,20 +311,17 @@ class RomajiBuilder {
                     takeNext = false
                     wasKatakana = c.isKatakana()
                 }
-
                 c == 'を' || c.isPunctuation() -> {
                     take = true
                     takeNext = true
                     wasKatakana = false
                 }
-
                 c.isHiragana() -> {
                     if (wasKatakana) {
                         take = true
                         wasKatakana = false
                     }
                 }
-
                 c.isKatakana() -> {
                     if (!wasKatakana) {
                         take = true

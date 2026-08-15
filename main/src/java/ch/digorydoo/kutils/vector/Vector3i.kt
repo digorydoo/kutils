@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-import ch.digorydoo.kutils.math.max
 import kotlin.math.abs
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -22,7 +21,7 @@ open class Vector3i(open val x: Int, open val y: Int, open val z: Int) {
         x == vec.x && y == vec.y && z == vec.z
 
     fun maxAbsComponent() =
-        max(abs(x), abs(y), abs(z))
+        maxOf(abs(x), abs(y), abs(z))
 
     fun isZero() =
         x == 0 && y == 0 && z == 0

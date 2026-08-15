@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-import ch.digorydoo.kutils.math.max
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -86,7 +85,7 @@ open class Vector3f(
         )
 
     fun maxAbsComponent() =
-        max(abs(x), abs(y), abs(z))
+        maxOf(abs(x), abs(y), abs(z))
 
     fun isZero() =
         x == 0.0f && y == 0.0f && z == 0.0f

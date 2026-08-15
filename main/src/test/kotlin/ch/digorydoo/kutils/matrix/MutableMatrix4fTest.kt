@@ -393,7 +393,7 @@ internal class MutableMatrix4fTest {
     fun shouldProperlyMultiplyInplace() {
         val m1 = MutableMatrix4f().apply { setScaling(0.42f, 0.33f, 0.12f) }
         val m2 = MutableMatrix4f().apply { setScaling(0.94f, 0.25f, 0.56f) }
-        m1.multiply(m2) // modifies m1, leaves m2 untouched
+        m1 *= m2 // modifies m1, leaves m2 untouched
         assertEquals(
             m1.toString(),
             """

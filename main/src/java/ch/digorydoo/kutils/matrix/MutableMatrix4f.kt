@@ -324,8 +324,13 @@ class MutableMatrix4f: Matrix4f {
         multiply(_buffer, _buffer, other.buffer)
     }
 
-    fun multiply(other: Matrix4f) {
+    @Deprecated("Use *=")
+    fun setMultiplied(other: Matrix4f) {
         multiply(_buffer, _buffer, other.buffer)
+    }
+
+    fun setMultiplied(a: Matrix4f, b: Matrix4f) {
+        multiply(_buffer, a.buffer, b.buffer)
     }
 
     fun mapInplace(lambda: (index: Int, value: Float) -> Float) {

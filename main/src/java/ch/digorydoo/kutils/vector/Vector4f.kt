@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-import ch.digorydoo.kutils.math.max
 import kotlin.math.abs
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
@@ -46,7 +45,7 @@ open class Vector4f(
         x == vec.x && y == vec.y && z == vec.z && w == vec.w
 
     fun maxAbsComponent() =
-        max(abs(x), abs(y), abs(z), abs(w))
+        maxOf(abs(x), abs(y), abs(z), abs(w))
 
     fun toMutable() =
         MutableVector4f(x, y, z, w)

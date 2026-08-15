@@ -1,6 +1,7 @@
 package ch.digorydoo.kutils.vector
 
 import ch.digorydoo.kutils.math.clamp
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -20,15 +21,21 @@ class MutableVector2f(x: Float, y: Float): Vector2f(x, y) {
         return this
     }
 
-    fun set(theX: Int, theY: Int): MutableVector2f {
-        x = theX.toFloat()
-        y = theY.toFloat()
+    fun set(x: Int, y: Int): MutableVector2f {
+        this.x = x.toFloat()
+        this.y = y.toFloat()
         return this
     }
 
-    fun set(theX: Float, theY: Float): MutableVector2f {
-        x = theX
-        y = theY
+    fun set(x: Float, y: Float): MutableVector2f {
+        this.x = x
+        this.y = y
+        return this
+    }
+
+    fun setComponentsToZeroIfSmall(threshold: Float = Float.MIN_VALUE): MutableVector2f {
+        if (abs(x) <= threshold) x = 0f
+        if (abs(y) <= threshold) y = 0f
         return this
     }
 
@@ -38,9 +45,9 @@ class MutableVector2f(x: Float, y: Float): Vector2f(x, y) {
         return this
     }
 
-    fun add(theX: Float, theY: Float): MutableVector2f {
-        x += theX
-        y += theY
+    fun add(x: Float, y: Float): MutableVector2f {
+        this.x += x
+        this.y += y
         return this
     }
 
@@ -50,15 +57,15 @@ class MutableVector2f(x: Float, y: Float): Vector2f(x, y) {
         return this
     }
 
-    fun subtract(theX: Float, theY: Float): MutableVector2f {
-        x -= theX
-        y -= theY
+    fun subtract(x: Float, y: Float): MutableVector2f {
+        this.x -= x
+        this.y -= y
         return this
     }
 
-    fun scale(byX: Float, byY: Float): MutableVector2f {
-        x *= byX
-        y *= byY
+    fun scale(xfactor: Float, yfactor: Float): MutableVector2f {
+        x *= xfactor
+        y *= yfactor
         return this
     }
 

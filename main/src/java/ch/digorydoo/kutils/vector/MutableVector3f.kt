@@ -2,6 +2,7 @@ package ch.digorydoo.kutils.vector
 
 import ch.digorydoo.kutils.math.clamp
 import ch.digorydoo.kutils.math.lerp
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -63,6 +64,13 @@ class MutableVector3f(x: Float, y: Float, z: Float): Vector3f(x, y, z) {
 
     fun setToNormal(p0: Vector3f, p1: Vector3f, p2: Vector3f) {
         set(p1.x - p0.x, p1.y - p0.y, p1.z - p0.z).cross(p2.x - p0.x, p2.y - p0.y, p2.z - p0.z).normalize()
+    }
+
+    fun setComponentsToZeroIfSmall(threshold: Float = Float.MIN_VALUE): MutableVector3f {
+        if (abs(x) <= threshold) x = 0f
+        if (abs(y) <= threshold) y = 0f
+        if (abs(z) <= threshold) z = 0f
+        return this
     }
 
     fun add(vec: Vector3f): MutableVector3f {

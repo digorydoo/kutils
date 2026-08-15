@@ -120,6 +120,45 @@ class KDataInputStream<M: KDataInputStream.FileMarker>(
         }
     }
 
+    // Untested
+    // private fun readVector2fList(dst: MutableList<Vector2f>) {
+    //     val arr = readFloatArray()
+    //     require(arr.size % 2 == 0) { "Array size must be a multiple of 2" }
+    //     dst.clear()
+    //
+    //     val numPts = arr.size / 2
+    //     var j = 0
+    //
+    //     (0 ..< numPts).forEach { _ ->
+    //         val x = arr[j++]
+    //         val y = arr[j++]
+    //         dst.add(Vector2f(x, y))
+    //     }
+    //
+    //     require(j == arr.size)
+    //     require(dst.size == numPts)
+    // }
+
+    // Untested
+    // private fun readVector3fList(dst: MutableList<Vector3f>) {
+    //     val arr = readFloatArray()
+    //     require(arr.size % 3 == 0) { "Array size must be a multiple of 3" }
+    //     dst.clear()
+    //
+    //     val numPts = arr.size / 3
+    //     var j = 0
+    //
+    //     (0 ..< numPts).forEach { _ ->
+    //         val x = arr[j++]
+    //         val y = arr[j++]
+    //         val z = arr[j++]
+    //         dst.add(Vector3f(x, y, z))
+    //     }
+    //
+    //     require(j == arr.size)
+    //     require(dst.size == numPts)
+    // }
+
     fun readFloatBuffer(): FloatBuffer {
         val size = readInt32()
         val buf = newFloatBuffer(size)

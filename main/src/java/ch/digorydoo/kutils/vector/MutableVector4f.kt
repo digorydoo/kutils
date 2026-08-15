@@ -1,6 +1,7 @@
 package ch.digorydoo.kutils.vector
 
 import ch.digorydoo.kutils.matrix.Matrix4f
+import kotlin.math.abs
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableVector4f(x: Float, y: Float, z: Float, w: Float): Vector4f(x, y, z, w) {
@@ -35,6 +36,14 @@ class MutableVector4f(x: Float, y: Float, z: Float, w: Float): Vector4f(x, y, z,
 
     fun setMultiplied(mat: Matrix4f, vec: Vector4f) {
         mat.multiplyTo(vec, this)
+    }
+
+    fun setComponentsToZeroIfSmall(threshold: Float = Float.MIN_VALUE): MutableVector4f {
+        if (abs(x) <= threshold) x = 0f
+        if (abs(y) <= threshold) y = 0f
+        if (abs(z) <= threshold) z = 0f
+        if (abs(w) <= threshold) w = 0f
+        return this
     }
 
     fun add(vec: Vector4f) {
