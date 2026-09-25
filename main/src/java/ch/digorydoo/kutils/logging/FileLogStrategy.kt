@@ -9,7 +9,6 @@ import java.io.FileWriter
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-@Suppress("unused")
 @OptIn(ExperimentalTime::class) // necessary when compiling for Android
 class FileLogStrategy(val file: File, var minSeverity: Severity = Severity.WARNING): LogStrategy {
     var enabled = true

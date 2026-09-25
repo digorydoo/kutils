@@ -14,7 +14,6 @@ import java.nio.FloatBuffer
  *            .use { ExampleFileWriter(KDataOutputStream(it)).write(example) }
  *    }
  */
-@Suppress("unused")
 class KDataOutputStream<M: KDataInputStream.FileMarker>(private val output: DataOutputStream) {
     val bytesWritten get() = output.size()
 

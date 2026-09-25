@@ -6,7 +6,6 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableVector2f(x: Float, y: Float): Vector2f(x, y) {
     constructor(): this(0.0f, 0.0f)
     constructor(ix: Int, iy: Int): this(ix.toFloat(), iy.toFloat())

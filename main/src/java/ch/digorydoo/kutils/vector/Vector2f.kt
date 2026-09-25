@@ -4,7 +4,6 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Vector2f(open val x: Float, open val y: Float) {
     // constructor() with empty arguments intentionally not implemented -- use Vector2f.zero instead!
     constructor(ix: Int, iy: Int): this(ix.toFloat(), iy.toFloat())

@@ -4,7 +4,7 @@ fun Char.isSmallKana() =
     Unicode.HIRAGANA.small.contains(this) || Unicode.KATAKANA.small.contains(this)
 
 fun CharSequence.isSmallKana() =
-    all { it.isSmallKana() }
+    isNotEmpty() && all { it.isSmallKana() }
 
 fun CharSequence.hasSmallKana() =
     any { it.isSmallKana() }

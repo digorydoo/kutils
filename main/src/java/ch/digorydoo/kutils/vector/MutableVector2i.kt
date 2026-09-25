@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-@Suppress("unused")
 class MutableVector2i(x: Int, y: Int): Vector2i(x, y) {
     constructor(): this(0, 0)
     constructor(vec: Vector2i): this(vec.x, vec.y)

@@ -3,7 +3,6 @@ package ch.digorydoo.kutils.vector
 import ch.digorydoo.kutils.matrix.Matrix4f
 import kotlin.math.abs
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableVector4f(x: Float, y: Float, z: Float, w: Float): Vector4f(x, y, z, w) {
     constructor(): this(0.0f, 0.0f, 0.0f, 0.0f)
     constructor(vec: Vector4f): this(vec.x, vec.y, vec.z, vec.w)

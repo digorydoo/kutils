@@ -51,25 +51,25 @@ fun Char.toKatakana() =
     }
 
 fun CharSequence.isCJKNotKana() =
-    all { it.isCJKNotKana() }
+    isNotEmpty() && all { it.isCJKNotKana() }
 
 fun CharSequence.isCJKOrKana() =
-    all { it.isCJKOrKana() }
+    isNotEmpty() && all { it.isCJKOrKana() }
 
 fun CharSequence.isHiragana() =
-    all { it.isHiragana() }
+    isNotEmpty() && all { it.isHiragana() }
 
 fun CharSequence.isKatakana() =
-    all { it.isKatakana() }
+    isNotEmpty() && all { it.isKatakana() }
 
 fun CharSequence.isKana() =
-    all { it.isKana() }
+    isNotEmpty() && all { it.isKana() }
 
 fun CharSequence.isPunctuation() =
-    all { it.isPunctuation() }
+    isNotEmpty() && all { it.isPunctuation() }
 
 fun CharSequence.isBracket() =
-    all { it.isBracket() }
+    isNotEmpty() && all { it.isBracket() }
 
 fun CharSequence.hasCJKIgnoringKana() =
     any { it.isCJKNotKana() }

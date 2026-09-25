@@ -149,6 +149,7 @@ class RomajiGenerator {
             .replace("mondaiheno", "mondai e no")
             .replace("chatōkashi", "cha to o-kashi")
             .replace("seikōheno", "seikō e no")
+            .replace("tougarashi", "tōgarashi")
     }
 
     /**

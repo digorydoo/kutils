@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.utils
 
-import ch.digorydoo.kutils.string.toPrecision
+import ch.digorydoo.kutils.string.toFixed
 import kotlin.test.assertTrue
 
 // Kotlin has assertContains(range, value, msg), but these functions describe the error message better.
@@ -16,29 +16,29 @@ fun assertWithin(range: ClosedRange<Int>, value: Int, msg: String? = null) =
 fun assertWithin(range: ClosedRange<Float>, value: Float, msg: String? = null) =
     assertTrue(
         value in range,
-        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toPrecision(6)} to be inside range " +
-            range.start.toPrecision(6) + " .. " + range.endInclusive.toPrecision(6)
+        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toFixed(6)} to be inside range " +
+            range.start.toFixed(6) + " .. " + range.endInclusive.toFixed(6)
     )
 
 fun assertWithin(range: ClosedRange<Double>, value: Double, msg: String? = null) =
     assertTrue(
         value in range,
-        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toPrecision(8)} to be inside range " +
-            range.start.toPrecision(8) + " .. " + range.endInclusive.toPrecision(8)
+        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toFixed(8)} to be inside range " +
+            range.start.toFixed(8) + " .. " + range.endInclusive.toFixed(8)
     )
 
 fun assertWithin(range: OpenEndRange<Float>, value: Float, msg: String? = null) =
     assertTrue(
         value in range,
-        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toPrecision(6)} to be inside range " +
-            range.start.toPrecision(6) + " ..< " + range.endExclusive.toPrecision(6)
+        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toFixed(6)} to be inside range " +
+            range.start.toFixed(6) + " ..< " + range.endExclusive.toFixed(6)
     )
 
 fun assertWithin(range: OpenEndRange<Double>, value: Double, msg: String? = null) =
     assertTrue(
         value in range,
-        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toPrecision(8)} to be inside range " +
-            range.start.toPrecision(8) + " ..< " + range.endExclusive.toPrecision(8)
+        (msg?.let { "$msg: " } ?: "") + "Expected ${value.toFixed(8)} to be inside range " +
+            range.start.toFixed(8) + " ..< " + range.endExclusive.toFixed(8)
     )
 
 fun <T: Comparable<T>> assertLessThan(value: T, expectedMax: T, msg: String? = null) =

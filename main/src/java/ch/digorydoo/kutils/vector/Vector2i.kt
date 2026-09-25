@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-@Suppress("unused")
 open class Vector2i(open val x: Int, open val y: Int) {
     // constructor() with empty arguments intentionally not implemented -- use Vector2i.zero instead!
     constructor(vec: Vector2i): this(vec.x, vec.y)

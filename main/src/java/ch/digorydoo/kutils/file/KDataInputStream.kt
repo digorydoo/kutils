@@ -13,7 +13,6 @@ import java.nio.FloatBuffer
  *            .let { DataInputStream(it) }
  *            .use { ExampleFileReader(KDataInputStream(it, ExampleFileMarker::fromUShort)).read() }
  */
-@Suppress("unused")
 class KDataInputStream<M: KDataInputStream.FileMarker>(
     private val input: DataInputStream,
     private val ushortToMarker: (value: UShort) -> M,

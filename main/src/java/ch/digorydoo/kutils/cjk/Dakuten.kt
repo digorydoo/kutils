@@ -3,7 +3,6 @@ package ch.digorydoo.kutils.cjk
 fun Char.isDakuten() =
     Unicode.HIRAGANA.dakuten.contains(this) || Unicode.KATAKANA.dakuten.contains(this)
 
-@Suppress("unused")
 fun CharSequence.hasDakuten() =
     any { it.isDakuten() }
 

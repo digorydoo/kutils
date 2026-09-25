@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.vector
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableVector3i(x: Int, y: Int, z: Int): Vector3i(x, y, z) {
     constructor(): this(0, 0, 0)
     constructor(vec: Vector3i): this(vec.x, vec.y, vec.z)

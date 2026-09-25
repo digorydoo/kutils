@@ -3,7 +3,6 @@ package ch.digorydoo.kutils.rect
 import ch.digorydoo.kutils.vector.Vector2f
 import ch.digorydoo.kutils.vector.Vector2i
 
-@Suppress("unused")
 open class Recti(
     open val left: Int,
     open val top: Int,

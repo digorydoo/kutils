@@ -2,7 +2,6 @@ package ch.digorydoo.kutils.vector
 
 import kotlin.math.abs
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Vector4f(
     open val x: Float,
     open val y: Float,

@@ -3,7 +3,6 @@ package ch.digorydoo.kutils.colour
 import ch.digorydoo.kutils.math.clamp
 import ch.digorydoo.kutils.math.lerp
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Colour(
     open val red: Float,
     open val green: Float,

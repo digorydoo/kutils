@@ -6,20 +6,33 @@ import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.round
 
-fun withPercent(n: Int, total: Int) = when (n > 0) {
-    true -> "${lpad(n)} (${100 * n / total}%)"
-    false -> lpad(n)
+fun withPercent(n: Int, total: Int, padding: Int = 4) = when (n > 0) {
+    true -> "${lpad(n, toLen = padding)} (${100 * n / total}%)"
+    false -> lpad(n, toLen = padding)
 }
 
-fun Float.toPrecision(precision: Int) =
-    this.toDouble().toPrecision(precision)
+fun Float.toPercent(precision: Int = 1) = when (this) {
+    0f -> "0%"
+    1f -> "100%"
+    else -> "${(100f * this).toFixed(precision)}%"
+}
+
+fun Double.toPercent(precision: Int = 1) = when (this) {
+    0.0 -> "0%"
+    1.0 -> "100%"
+    else -> "${(100.0 * this).toFixed(precision)}%"
+}
+
+fun Float.toFixed(precision: Int) =
+    this.toDouble().toFixed(precision)
 
 /**
- * In the JVM, you can use ".${precision}f".format(value), but this extension function here works even in
- * Kotlin/native, and it also avoids scientific notation altogether.
+ * Converts the value to String using a fixed number of digits after the comma. The result will never use scientific
+ * notation. On the JVM, you might also use ".${precision}f".format(value), but that form might result in scientific
+ * notation, and it does not work on Kotlin/native, while this function does.
  * @param precision The desired number of digits after the comma
  */
-fun Double.toPrecision(precision: Int): String {
+fun Double.toFixed(precision: Int): String {
     require(precision >= 0)
 
     if (precision == 0) {

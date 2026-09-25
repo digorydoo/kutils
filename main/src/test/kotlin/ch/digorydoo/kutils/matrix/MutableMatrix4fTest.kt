@@ -1,6 +1,6 @@
 package ch.digorydoo.kutils.matrix
 
-import ch.digorydoo.kutils.string.toPrecision
+import ch.digorydoo.kutils.string.toFixed
 import ch.digorydoo.kutils.utils.mapInplace
 import ch.digorydoo.kutils.utils.newFloatBuffer
 import ch.digorydoo.kutils.utils.toList
@@ -452,12 +452,12 @@ internal class MutableMatrix4fTest {
         m.setIdentity() // modifies m.buffer
 
         assertEquals(
-            m.buffer.toList().joinToString(", ") { it.toPrecision(1) },
+            m.buffer.toList().joinToString(", ") { it.toFixed(1) },
             "1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0"
         )
 
         assertEquals(
-            buf.toList().joinToString(", ") { it.toPrecision(1) },
+            buf.toList().joinToString(", ") { it.toFixed(1) },
             "0.0, 2.1, 4.2, 6.3, 8.4, 10.5, 12.6, 14.7, 16.8, 18.9, 21.0, 23.1, 25.2, 27.3, 29.4, 31.5"
         )
     }
@@ -468,7 +468,7 @@ internal class MutableMatrix4fTest {
         val list = mutableListOf<String>()
 
         m.forEachElement { i, value ->
-            list.add("i=$i, value=${value.toPrecision(1)}")
+            list.add("i=$i, value=${value.toFixed(1)}")
         }
 
         assertEquals(list.size, 16)

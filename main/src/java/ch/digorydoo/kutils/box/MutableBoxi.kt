@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.box
 
-@Suppress("unused")
 class MutableBoxi(
     theX0: Int,
     theY0: Int,

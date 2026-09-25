@@ -2,7 +2,6 @@ package ch.digorydoo.kutils.vector
 
 import kotlin.math.abs
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Vector3i(open val x: Int, open val y: Int, open val z: Int) {
     // constructor() with empty arguments intentionally not implemented -- use Vector3i.zero instead!
     constructor(vec: Vector3i): this(vec.x, vec.y, vec.z)

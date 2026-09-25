@@ -27,6 +27,15 @@ class Moment(
     val minute: Int, // 0 .. 59
     val second: Int, // 0 .. 59
 ): Comparable<Moment> {
+    constructor(other: Moment): this(
+        year = other.year,
+        month = other.month,
+        day = other.day,
+        hour = other.hour,
+        minute = other.minute,
+        second = other.second,
+    )
+
     init {
         require(year in 1900 .. 3000) { "year out of bounds" }
         require(month in 1 .. 12) { "month out of bounds" }

@@ -28,7 +28,6 @@ fun FloatArray.toFloatBuffer(): FloatBuffer {
     return fb
 }
 
-@Suppress("unused")
 fun List<Float>.toFloatBuffer(): FloatBuffer {
     val bb = ByteBuffer.allocateDirect(this.size * Float.SIZE_BYTES)
     bb.order(ByteOrder.nativeOrder())
@@ -73,7 +72,6 @@ fun FloatBuffer.swap(i: Int, j: Int) {
     put(j, v)
 }
 
-@Suppress("unused")
 fun ByteBuffer.toList(): List<Byte> {
     // limit <= capacity
     return List(this.limit()) { i ->

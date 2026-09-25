@@ -7,7 +7,6 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableVector3f(x: Float, y: Float, z: Float): Vector3f(x, y, z) {
     constructor(): this(0.0f, 0.0f, 0.0f)
     constructor(ix: Int, iy: Int, iz: Int): this(ix.toFloat(), iy.toFloat(), iz.toFloat())

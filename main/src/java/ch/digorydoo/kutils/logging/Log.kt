@@ -1,6 +1,5 @@
 package ch.digorydoo.kutils.logging
 
-@Suppress("unused")
 object Log {
     enum class Severity(val level: Int) {
         DEBUG(0),

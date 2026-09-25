@@ -2,7 +2,6 @@ package ch.digorydoo.kutils.colour
 
 import ch.digorydoo.kutils.math.lerp
 
-@Suppress("unused")
 class MutableColour(
     theRed: Float,
     theGreen: Float,

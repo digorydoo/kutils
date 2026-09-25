@@ -1,7 +1,7 @@
 package ch.digorydoo.kutils.matrix
 
 import ch.digorydoo.kutils.string.lpad
-import ch.digorydoo.kutils.string.toPrecision
+import ch.digorydoo.kutils.string.toFixed
 import ch.digorydoo.kutils.utils.forEachElement
 import ch.digorydoo.kutils.utils.mapInplace
 import ch.digorydoo.kutils.utils.mapInplaceIndexed
@@ -89,7 +89,7 @@ open class Matrix4f protected constructor() {
         val maxLenPerColumn = Array(4) { 0 }
 
         forEachElement { i, value ->
-            val s = value.toPrecision(2)
+            val s = value.toFixed(2)
             val column = i / 4
             maxLenPerColumn[column] = max(s.length, maxLenPerColumn[column])
             arr[i] = s

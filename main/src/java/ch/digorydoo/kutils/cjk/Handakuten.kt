@@ -3,7 +3,6 @@ package ch.digorydoo.kutils.cjk
 fun Char.isHandakuten() =
     Unicode.HIRAGANA.handakuten.contains(this) || Unicode.KATAKANA.handakuten.contains(this)
 
-@Suppress("unused")
 fun CharSequence.hasHandakuten() =
     any { it.isHandakuten() }
 

@@ -2,7 +2,6 @@ package ch.digorydoo.kutils.rect
 
 import ch.digorydoo.kutils.vector.Vector2f
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MutableRectf(
     theLeft: Float,
     theTop: Float,
