@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package ch.digorydoo.kutils.filter
 
 import ch.digorydoo.kutils.math.lerp
@@ -44,7 +42,7 @@ fun envelope(
  * @param post: must be in [0..1]
  * @return A value in [0..1]
  */
-fun delay(x: Double, pre: Double, post: Double = 1.0) = when {
+fun envDelay(x: Double, pre: Double, post: Double = 1.0) = when {
     x <= pre -> 0.0
     x >= post -> 1.0
     else -> (x - pre) / (post - pre)
@@ -58,5 +56,5 @@ fun delay(x: Double, pre: Double, post: Double = 1.0) = when {
  * @param post: must be in [0..1]
  * @return A value in [0..1]
  */
-fun delay(x: Float, pre: Float, post: Float = 1.0f) =
-    delay(x.toDouble(), pre.toDouble(), post.toDouble()).toFloat()
+fun envDelay(x: Float, pre: Float, post: Float = 1.0f) =
+    envDelay(x.toDouble(), pre.toDouble(), post.toDouble()).toFloat()

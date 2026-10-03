@@ -14,6 +14,7 @@ object Unicode {
     const val BULLET = '\u2022'               // •
     const val TRIANG_RIGHT = '\u2023'         // ‣
     const val HYPHENATION_POINT = '\u2027'
+    const val NARROW_NO_BREAK_SPACE = '\u202f'
     const val LOW_ASTERISK = '\u204e'         // ⁎
     const val FLOWER_PUNCT = '\u2055'         // ⁕
     const val FOUR_DOT = '\u2058'             // ⁘
