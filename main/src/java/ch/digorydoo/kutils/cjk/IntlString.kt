@@ -1,6 +1,7 @@
 package ch.digorydoo.kutils.cjk
 
-import java.util.*
+import java.util.Locale
+import java.util.MissingResourceException
 
 /**
  * Member variable names are supposed to be ISO 639-1.
@@ -11,7 +12,7 @@ class IntlString(
     en: String? = null,
     fr: String? = null,
     it: String? = null,
-    ja: String? = null
+    ja: String? = null,
 ) {
     constructor(other: IntlString): this(
         de = other._de,
@@ -62,7 +63,7 @@ class IntlString(
             var theLang = ""
             try {
                 theLang = Locale.getDefault().isO3Language
-            } catch (e: MissingResourceException) {
+            } catch (_: MissingResourceException) {
                 // ignore
             }
             // theLang is ISO 639-2, return it as ISO 639-1

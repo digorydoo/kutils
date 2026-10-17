@@ -186,17 +186,18 @@ class RomajiGenerator {
             "うろうろ" -> " urouro "
             "くじらは" -> "kujira wa "
             "これはいくらですか" -> " kore wa ikura desu ka" // not "kore hai kura desu ka"
-            "さんは" -> "-san wa "
             "さんのお" -> "-san no o"
+            "さんは" -> "-san wa "
             "では" -> " de wa "
             "のうち" -> " no uchi "
+            "のお" -> "no o"
             "のひげは" -> " no hige wa "
             "は" -> " wa "
+            "はい" -> " hai "
             "はいつですか" -> " wa itsu desu ka " // not "hai tsu desu ka"
             "はきはき" -> " hakihaki "
+            "はりきって" -> "harikitte"
             "へ" -> " e "
-            "はい" -> " hai "
-            "のお" -> "no o"
             else -> null
         }
     }

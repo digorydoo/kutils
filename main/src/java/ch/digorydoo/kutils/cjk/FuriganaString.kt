@@ -1,8 +1,14 @@
-@file:Suppress("unused", "MemberVisibilityCanBePrivate")
-
 package ch.digorydoo.kutils.cjk
 
-// FuriganaStrings are immutable
+/**
+ * FuriganaStrings are immutable. The raw String is expected to define furigana like this:
+ * raw="【思：おも】い【出：だ】す" will be parsed as kanji="思い出す" and kana="おもいだす".
+ * Normally, each kanji should have its own furigana group, e.g. raw=【必：ひっ】【死：し】.
+ * Sometimes it's necessary to span multiple kanjis, e.g. raw="【今日：きょう】".
+ * It's relevant for the kanji rendering whether okurigana is put inside or outside brackets,
+ * e.g. raw="【真：ま】っ【白：しろ】" becomes kanji="真っ白", kana="まっしろ";
+ * whereas raw="【真：まっ】【白：しろ】" becomes kanji="真白", kana="まっしろ".
+ */
 class FuriganaString(val raw: String = "") {
     var _kanji: String? = null
     var _kana: String? = null

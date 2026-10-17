@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package ch.digorydoo.kutils.utils
 
 /**
