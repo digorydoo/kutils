@@ -19,6 +19,7 @@ class FuriganaString(val raw: String = "") {
     val kana get() = _kana ?: buildKana(raw).also { _kana = it }
     val romaji get() = _romaji ?: RomajiGenerator().generate(raw).also { _romaji = it }
     val readings get() = _readings ?: buildReadings(raw).also { _readings = it }
+    val hasFurigana get() = kanji != kana
 
     fun isEmpty() = raw.isEmpty()
     fun isNotEmpty() = raw.isNotEmpty()

@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * compile-goigoi itself is an extensive test of the FuriganaBuilder, so we only check some odd special cases here.
+ * compile-goigoi itself is an extensive test of the RomajiGenerator, so we only check some odd special cases here.
  */
 internal class RomajiGeneratorTest {
     @Test

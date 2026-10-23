@@ -63,8 +63,10 @@ object Unicode {
         )
         val small = listOf(
             'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
+            'ゖ',
             'っ',
             'ゃ', 'ゅ', 'ょ',
+            'ゎ',
         )
         val allCommon = normal + dakuten + handakuten + small
     }
@@ -101,6 +103,7 @@ object Unicode {
             'ヵ', 'ヶ',
             'ッ',
             'ャ', 'ュ', 'ョ',
+            'ヮ',
         )
         val allCommon = normal + dakuten + handakuten + small
     }

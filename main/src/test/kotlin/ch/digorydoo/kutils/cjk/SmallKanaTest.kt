@@ -7,27 +7,33 @@ import kotlin.test.assertTrue
 
 internal class SmallKanaTest {
     @Test
-    fun shouldRecognizeSmallKana() {
+    fun `should recognize small kana`() {
         assertTrue('ゃ'.isSmallKana())
         assertTrue('ヶ'.isSmallKana())
+        assertTrue('ゖ'.isSmallKana())
+        assertTrue('ゎ'.isSmallKana())
+        assertTrue('ヮ'.isSmallKana())
 
         assertFalse('や'.isSmallKana())
         assertFalse('ケ'.isSmallKana())
+        assertFalse('け'.isSmallKana())
+        assertFalse('わ'.isSmallKana())
+        assertFalse('ワ'.isSmallKana())
     }
 
     @Test
     fun shouldConvertToSmallKana() {
-        assertEquals('や'.toSmallKana(), 'ゃ')
-        assertEquals("あいうえおつやゆよ".toSmallKana(), "ぁぃぅぇぉっゃゅょ")
-        assertEquals("アイウエオツヤユヨ".toSmallKana(), "ァィゥェォッャュョ")
+        assertEquals('ゃ', 'や'.toSmallKana())
+        assertEquals("ぁぃぅぇぉっゃゅょ", "あいうえおつやゆよ".toSmallKana())
+        assertEquals("ァィゥェォッャュョ", "アイウエオツヤユヨ".toSmallKana())
         "blahBLAH123ゃッ".let { assertEquals(it.toSmallKana(), it) }
     }
 
     @Test
     fun shouldConvertToNormalSizedKana() {
-        assertEquals('ゃ'.toNormalSizedKana(), 'や')
-        assertEquals("ぁぃぅぇぉっゃゅょ".toNormalSizedKana(), "あいうえおつやゆよ")
-        assertEquals("ァィゥェォッャュョ".toNormalSizedKana(), "アイウエオツヤユヨ")
+        assertEquals('や', 'ゃ'.toNormalSizedKana())
+        assertEquals("あいうえおつやゆよ", "ぁぃぅぇぉっゃゅょ".toNormalSizedKana())
+        assertEquals("アイウエオツヤユヨ", "ァィゥェォッャュョ".toNormalSizedKana())
         "blahBLAH123やツ".let { assertEquals(it.toNormalSizedKana(), it) }
     }
 }

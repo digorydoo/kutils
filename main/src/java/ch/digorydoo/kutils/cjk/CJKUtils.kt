@@ -106,15 +106,15 @@ fun CharSequence.toKatakana() =
     }
 
 fun isSameDigit(a: Char, b: Char): Boolean {
-    val na = when {
-        a >= '0' && a <= '9' -> a.code - '0'.code
-        a >= '０' && a <= '９' -> a.code - '０'.code
+    val na = when (a) {
+        in '0' .. '9' -> a.code - '0'.code
+        in '０' .. '９' -> a.code - '０'.code
         else -> return false
     }
 
-    val nb = when {
-        b >= '0' && b <= '9' -> b.code - '0'.code
-        b >= '０' && b <= '９' -> b.code - '０'.code
+    val nb = when (b) {
+        in '0' .. '9' -> b.code - '0'.code
+        in '０' .. '９' -> b.code - '０'.code
         else -> return false
     }
 

@@ -1,8 +1,6 @@
-@file:Suppress("unused", "MemberVisibilityCanBePrivate", "RedundantVisibilityModifier")
-
 package ch.digorydoo.kutils.cjk
 
-public class FuriganaIterator(private val text: CharSequence): Iterator<FuriganaIterator.Range> {
+class FuriganaIterator(private val text: CharSequence): Iterator<FuriganaIterator.Range> {
     class MalformedFuriganaException(part: CharSequence, cause: Throwable? = null):
         Exception("Malformed furigana: $part", cause)
 
